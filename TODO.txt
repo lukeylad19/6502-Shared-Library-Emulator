@@ -1,5 +1,5 @@
 1. Main file
 2. 56 OpCode function file
 3. 6502 class for registers and functions
-4. Completed switch case
+4. Completed 151 case switch case
 5. Make file for automatic shared libray compilation 
