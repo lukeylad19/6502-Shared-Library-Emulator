@@ -1,4 +1,4 @@
-# 6502emu
+# 6502-SLemu
 ## Description
 A project to design an emulator for the 6502 CPU that compiles into a shared object file (or shared library) 
 so that it can be linked and used with other projects. Demonstrates the versatility of the 6502. 
