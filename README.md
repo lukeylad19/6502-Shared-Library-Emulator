@@ -5,4 +5,4 @@ so that it can be linked and used with other projects. Demonstrates the versatil
 
 ## Links and References
 - [Online 6502 Emulator](http://visual6502.org/JSSim/expert.html)
-- [6502 Instruction Set](http://www.llx.com/~nparker/a2/opcodes.html)
+- [6502 Instruction Set](https://www.masswerk.at/6502/6502_instruction_set.html)
