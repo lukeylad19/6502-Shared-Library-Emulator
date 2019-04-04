@@ -9,7 +9,7 @@
         ASL_zpg = 0x06,
         PHP_impl = 0x08,
         ORA_n = 0X09,
-        ASL_A = 0X0A,
+        ASL_a = 0X0A,
         ORA_abs = 0X0D,
         ASL_abs = 0X0E,
         BPL_rel = 0x10;
@@ -55,7 +55,7 @@
         LSR_zpg_x = 0x56;
         CLI_impl = 0x58;
         EOR_abs_y = 0x59;
-        ERO_abs_x = 0x5D;
+        EOR_abs_x = 0x5D;
         LSR_abs = 0x5E;
         RTS_impl = 0x60;
         ADC_x_ind = 0x61;
