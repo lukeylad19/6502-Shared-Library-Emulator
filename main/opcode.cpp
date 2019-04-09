@@ -1,10 +1,8 @@
 #include <iostream>
 #include "opcode.h"
 
-void printname(){
+//opcode::opcode(){}
 
-    string name = "Lukas";
-    { 
-       std::cout << "Name is: " << name; 
-    }
+void opcode::ADC(){
+    std::cout<<"ADC entered"<< std::endl;
 }

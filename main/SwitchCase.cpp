@@ -2,620 +2,623 @@
 #include <stdint.h>
 #include <string>
 #include "instruction.h"
+#include "opcode.h"
 
-using namespace std;
 int main( int c, char** argv){
 
+    opcode op = opcode();
+
     int val;
-    cout << "enter OpCode:" << endl;
-    cin >> val;
+    std::cout << "enter OpCode:" << std::endl;
+    std::cin >> val;
 
     switch (val){
 
-        case opCode::BRK:
-            cout << "code BRK or 0x00" << endl;
+        case instruct::BRK:
+            std::cout << "code BRK or 0x00" << std::endl;
             break;
             
-        case opCode::ORA_x_ind:
-            cout << "code ORA_x_ind or 0x01" << endl;
+        case instruct::ORA_x_ind:
+            std::cout << "code ORA_x_ind or 0x01" << std::endl;
             break;
 
-        case opCode::ORA_zpg:
-            cout << "Valid Code" << endl;
+        case instruct::ORA_zpg:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::ASL_zpg:
-            cout << "Valid Code" << endl;
+        case instruct::ASL_zpg:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::PHP_impl:
-            cout << "Valid Code" << endl;
+        case instruct::PHP_impl:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::ORA_n:
-            cout << "Valid Code" << endl;
+        case instruct::ORA_n:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::ASL_a:
-            cout << "Valid Code" << endl;
+        case instruct::ASL_a:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::ORA_abs:
-            cout << "Valid Code" << endl;
+        case instruct::ORA_abs:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::ASL_abs:
-            cout << "Valid Code" << endl;
+        case instruct::ASL_abs:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::BPL_rel:
-            cout << "Valid Code" << endl;
+        case instruct::BPL_rel:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::ORA_ind_y:
-            cout << "Valid Code" << endl;
+        case instruct::ORA_ind_y:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::ORA_zpg_x:
-            cout << "Valid Code" << endl;
+        case instruct::ORA_zpg_x:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::ASL_zpg_x:
-            cout << "Valid Code" << endl;
+        case instruct::ASL_zpg_x:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::CLC_impl:
-            cout << "Valid Code" << endl;
+        case instruct::CLC_impl:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::ORA_abs_y:
-            cout << "Valid Code" << endl;
+        case instruct::ORA_abs_y:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::ORA_abs_x:
-            cout << "Valid Code" << endl;
+        case instruct::ORA_abs_x:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::ASL_abs_x:
-            cout << "Valid Code" << endl;
+        case instruct::ASL_abs_x:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::JSR_abs:
-            cout << "Valid Code" << endl;
+        case instruct::JSR_abs:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::AND_x_ind:
-            cout << "Valid Code" << endl;
+        case instruct::AND_x_ind:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::BIT_zpg:
-            cout << "Valid Code" << endl;
+        case instruct::BIT_zpg:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::NAD_zpg:
-            cout << "Valid Code" << endl;
+        case instruct::NAD_zpg:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::ROL_apg:
-            cout << "Valid Code" << endl;
+        case instruct::ROL_apg:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::PLP_impl:
-            cout << "Valid Code" << endl;
+        case instruct::PLP_impl:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::AND_n:
-            cout << "Valid Code" << endl;
+        case instruct::AND_n:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::ROL_a:
-            cout << "Valid Code" << endl;
+        case instruct::ROL_a:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::BIT_abs:
-            cout << "Valid Code" << endl;
+        case instruct::BIT_abs:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::AND_abs:
-            cout << "Valid Code" << endl;
+        case instruct::AND_abs:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::ROL_abs:
-            cout << "Valid Code" << endl;
+        case instruct::ROL_abs:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::BMI_rel:
-            cout << "Valid Code" << endl;
+        case instruct::BMI_rel:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::AND_ind_y:
-            cout << "Valid Code" << endl;
+        case instruct::AND_ind_y:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::AND_zpg_x:
-            cout << "Valid Code" << endl;
+        case instruct::AND_zpg_x:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::ROL_zpg_x:
-            cout << "Valid Code" << endl;
+        case instruct::ROL_zpg_x:
+            std::cout << "Valid Code" << std::endl;
             break;
 
 
-        case opCode::SEC_impl:
-            cout << "Valid Code" << endl;
+        case instruct::SEC_impl:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::AND_abs_y:
-            cout << "Valid Code" << endl;
+        case instruct::AND_abs_y:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::AND_abs_x:
-            cout << "Valid Code" << endl;
+        case instruct::AND_abs_x:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::ROL_abs_x:
-            cout << "Valid Code" << endl;
+        case instruct::ROL_abs_x:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::RTI_impl:
-            cout << "Valid Code" << endl;
+        case instruct::RTI_impl:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::EOR_x_ind:
-            cout << "Valid Code" << endl;
+        case instruct::EOR_x_ind:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::EOR_zpg:
-            cout << "Valid Code" << endl;
+        case instruct::EOR_zpg:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::LSR_zpg:
-            cout << "Valid Code" << endl;
+        case instruct::LSR_zpg:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::PHA_impl:
-            cout << "Valid Code" << endl;
+        case instruct::PHA_impl:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::EOR_n:
-            cout << "Valid Code" << endl;
+        case instruct::EOR_n:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::LAS_a:
-            cout << "Valid Code" << endl;
+        case instruct::LAS_a:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::JMP_abs:
-            cout << "Valid Code" << endl;
+        case instruct::JMP_abs:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::EOR_abs:
-            cout << "Valid Code" << endl;
+        case instruct::EOR_abs:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::LSR_abs:
-            cout << "Valid Code" << endl;
+        case instruct::LSR_abs:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::BVC_rel:
-            cout << "Valid Code" << endl;
+        case instruct::BVC_rel:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::EOR_ind_y:
-            cout << "Valid Code" << endl;
+        case instruct::EOR_ind_y:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::EOR_zpg_x:
-            cout << "Valid Code" << endl;
+        case instruct::EOR_zpg_x:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::LSR_zpg_x:
-            cout << "Valid Code" << endl;
+        case instruct::LSR_zpg_x:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::CLI_impl:
-            cout << "Valid Code" << endl;
+        case instruct::CLI_impl:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::EOR_abs_y:
-            cout << "Valid Code" << endl;
+        case instruct::EOR_abs_y:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::EOR_abs_x:
-            cout << "Valid Code" << endl;
+        case instruct::EOR_abs_x:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::LSR_abs_x:
-            cout << "Valid Code" << endl;
+        case instruct::LSR_abs_x:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::RTS_impl:
-            cout << "Valid Code" << endl;
+        case instruct::RTS_impl:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::ADC_x_ind:
-            cout << "Valid Code" << endl;
+        case instruct::ADC_x_ind:
+            std::cout << "Valid Code" << std::endl;
+               op.ADC();
             break;
 
-        case opCode::ADC_zpg:
-            cout << "Valid Code" << endl;
+        case instruct::ADC_zpg:
+            std::cout << "Valid Code" << std::endl;
             break;
 
 
-        case opCode::ROR_zpg:
-            cout << "Valid Code" << endl;
+        case instruct::ROR_zpg:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::PLA_impl:
-            cout << "Valid Code" << endl;
+        case instruct::PLA_impl:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::ADC_n:
-            cout << "Valid Code" << endl;
+        case instruct::ADC_n:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::ROR_a:
-            cout << "Valid Code" << endl;
+        case instruct::ROR_a:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::JMP_ind:
-            cout << "Valid Code" << endl;
+        case instruct::JMP_ind:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::ADC_abs:
-            cout << "Valid Code" << endl;
+        case instruct::ADC_abs:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::ROR_abs:
-            cout << "Valid Code" << endl;
+        case instruct::ROR_abs:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::BVS_rel:
-            cout << "Valid Code" << endl;
+        case instruct::BVS_rel:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::ADC_ind_y:
-            cout << "Valid Code" << endl;
+        case instruct::ADC_ind_y:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::ADC_zpg_x:
-            cout << "Valid Code" << endl;
+        case instruct::ADC_zpg_x:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::ROR_zpg_x:
-            cout << "Valid Code" << endl;
+        case instruct::ROR_zpg_x:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::SEI_impl:
-            cout << "Valid Code" << endl;
+        case instruct::SEI_impl:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::ADC_abs_y:
-            cout << "Valid Code" << endl;
+        case instruct::ADC_abs_y:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::ADC_abs_x:
-            cout << "Valid Code" << endl;
+        case instruct::ADC_abs_x:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::ROR_abs_x:
-            cout << "Valid Code" << endl;
+        case instruct::ROR_abs_x:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::STA_x_ind:
-            cout << "Valid Code" << endl;
+        case instruct::STA_x_ind:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::STY_zpg:
-            cout << "Valid Code" << endl;
+        case instruct::STY_zpg:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::STA_zpg:
-            cout << "Valid Code" << endl;
+        case instruct::STA_zpg:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::STX_zpg:
-            cout << "Valid Code" << endl;
+        case instruct::STX_zpg:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::DEY_impl:
-            cout << "Valid Code" << endl;
+        case instruct::DEY_impl:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::TXA_impl:
-            cout << "Valid Code" << endl;
+        case instruct::TXA_impl:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::STY_abs:
-            cout << "Valid Code" << endl;
+        case instruct::STY_abs:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::STA_abs:
-            cout << "Valid Code" << endl;
+        case instruct::STA_abs:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::STX_abs:
-            cout << "Valid Code" << endl;
+        case instruct::STX_abs:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::BCC_rel:
-            cout << "Valid Code" << endl;
+        case instruct::BCC_rel:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::STA_ind_y:
-            cout << "Valid Code" << endl;
+        case instruct::STA_ind_y:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::STY_zpg_x:
-            cout << "Valid Code" << endl;
+        case instruct::STY_zpg_x:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::STA_zpg_x:
-            cout << "Valid Code" << endl;
+        case instruct::STA_zpg_x:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::STX_zpg_y:
-            cout << "Valid Code" << endl;
+        case instruct::STX_zpg_y:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::TYA_impl:
-            cout << "Valid Code" << endl;
+        case instruct::TYA_impl:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::STA_abs_y:
-            cout << "Valid Code" << endl;
+        case instruct::STA_abs_y:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::TXS_impl:
-            cout << "Valid Code" << endl;
+        case instruct::TXS_impl:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::STA_abs_x:
-            cout << "Valid Code" << endl;
+        case instruct::STA_abs_x:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::LDY_n:
-            cout << "Valid Code" << endl;
+        case instruct::LDY_n:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::LDA_x_ind:
-            cout << "Valid Code" << endl;
+        case instruct::LDA_x_ind:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::LDX_n:
-            cout << "Valid Code" << endl;
+        case instruct::LDX_n:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::LDY_zpg:
-            cout << "Valid Code" << endl;
+        case instruct::LDY_zpg:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::LDA_zpg:
-            cout << "Valid Code" << endl;
+        case instruct::LDA_zpg:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::LDX_zpg:
-            cout << "Valid Code" << endl;
+        case instruct::LDX_zpg:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::TAY_impl:
-            cout << "Valid Code" << endl;
+        case instruct::TAY_impl:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::LDA_n:
-            cout << "Valid Code" << endl;
+        case instruct::LDA_n:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::TAX_impl:
-            cout << "Valid Code" << endl;
+        case instruct::TAX_impl:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::LDA_abs:
-            cout << "Valid Code" << endl;
+        case instruct::LDA_abs:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::BCS_rel:
-            cout << "Valid Code" << endl;
+        case instruct::BCS_rel:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::LDA_ind_y:
-            cout << "Valid Code" << endl;
+        case instruct::LDA_ind_y:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::LDY_zpg_x:
-            cout << "Valid Code" << endl;
+        case instruct::LDY_zpg_x:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::LDA_zpg_x:
-            cout << "Valid Code" << endl;
+        case instruct::LDA_zpg_x:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::LDX_zpg_y:
-            cout << "Valid Code" << endl;
+        case instruct::LDX_zpg_y:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::CLV_impl:
-            cout << "Valid Code" << endl;
+        case instruct::CLV_impl:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::LDA_abs_y:
-            cout << "Valid Code" << endl;
+        case instruct::LDA_abs_y:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::TSX_impl:
-            cout << "Valid Code" << endl;
+        case instruct::TSX_impl:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::LDY_abs_x:
-            cout << "Valid Code" << endl;
+        case instruct::LDY_abs_x:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::LDA_abs_x:
-            cout << "Valid Code" << endl;
+        case instruct::LDA_abs_x:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::LDX_abs_y:
-            cout << "Valid Code" << endl;
+        case instruct::LDX_abs_y:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::CPY_n:
-            cout << "Valid Code" << endl;
+        case instruct::CPY_n:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::CMP_x_ind:
-            cout << "Valid Code" << endl;
+        case instruct::CMP_x_ind:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::CPY_zpg:
-            cout << "Valid Code" << endl;
+        case instruct::CPY_zpg:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::CMP_zpg:
-            cout << "Valid Code" << endl;
+        case instruct::CMP_zpg:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::DEC_zpg:
-            cout << "Valid Code" << endl;
+        case instruct::DEC_zpg:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::INY_impl:
-            cout << "Valid Code" << endl;
+        case instruct::INY_impl:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::CMP_n:
-            cout << "Valid Code" << endl;
+        case instruct::CMP_n:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::DEX_impl:
-            cout << "Valid Code" << endl;
+        case instruct::DEX_impl:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::CPY_abs:
-            cout << "Valid Code" << endl;
+        case instruct::CPY_abs:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::CMP_abs:
-            cout << "Valid Code" << endl;
+        case instruct::CMP_abs:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::DEC_abs:
-            cout << "Valid Code" << endl;
+        case instruct::DEC_abs:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::BNE_rel:
-            cout << "Valid Code" << endl;
+        case instruct::BNE_rel:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::CMP_ind_y:
-            cout << "Valid Code" << endl;
+        case instruct::CMP_ind_y:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::CMP_zpg_x:
-            cout << "Valid Code" << endl;
+        case instruct::CMP_zpg_x:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::DEC_zpg_x:
-            cout << "Valid Code" << endl;
+        case instruct::DEC_zpg_x:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::CLD_impl:
-            cout << "Valid Code" << endl;
+        case instruct::CLD_impl:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::CMP_abs_y:
-            cout << "Valid Code" << endl;
+        case instruct::CMP_abs_y:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::CMP_abs_x:
-            cout << "Valid Code" << endl;
+        case instruct::CMP_abs_x:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::DEC_abs_x:
-            cout << "Valid Code" << endl;
+        case instruct::DEC_abs_x:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::CPX_n:
-            cout << "Valid Code" << endl;
+        case instruct::CPX_n:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::SBC_x_ind:
-            cout << "Valid Code" << endl;
+        case instruct::SBC_x_ind:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::CPX_zpg:
-            cout << "Valid Code" << endl;
+        case instruct::CPX_zpg:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::SBC_zpg:
-            cout << "Valid Code" << endl;
+        case instruct::SBC_zpg:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::INC_zpg:
-            cout << "Valid Code" << endl;
+        case instruct::INC_zpg:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::INX_impl:
-            cout << "Valid Code" << endl;
+        case instruct::INX_impl:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::SBC_n:
-            cout << "Valid Code" << endl;
+        case instruct::SBC_n:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::NOP_impl:
-            cout << "Valid Code" << endl;
+        case instruct::NOP_impl:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::CPX_abs:
-            cout << "Valid Code" << endl;
+        case instruct::CPX_abs:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::SBC_abs:
-            cout << "Valid Code" << endl;
+        case instruct::SBC_abs:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::INC_abs:
-            cout << "Valid Code" << endl;
+        case instruct::INC_abs:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::BEQ_rel:
-            cout << "Valid Code" << endl;
+        case instruct::BEQ_rel:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::SBC_ind_y:
-            cout << "Valid Code" << endl;
+        case instruct::SBC_ind_y:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::SBC_zpg_x:
-            cout << "Valid Code" << endl;
+        case instruct::SBC_zpg_x:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::INC_zpg_x:
-            cout << "Valid Code" << endl;
+        case instruct::INC_zpg_x:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::SED_impl:
-            cout << "Valid Code" << endl;
+        case instruct::SED_impl:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::SBC_abs_y:
-            cout << "Valid Code" << endl;
+        case instruct::SBC_abs_y:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::SBC_abs_x:
-            cout << "Valid Code" << endl;
+        case instruct::SBC_abs_x:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::INC_abs_x:
-            cout << "Valid Code" << endl;
+        case instruct::INC_abs_x:
+            std::cout << "Valid Code" << std::endl;
             break;
 
-        case opCode::EXT:
-            cout << "code EXT or 0xFF" << endl;
+        case instruct::EXT:
+            std::cout << "code EXT or 0xFF" << std::endl;
             break;
 
         default:
-            cout << "I cant find this code!" << endl;
+            std::cout << "I cant find this code!" << std::endl;
         break;
     }
 
