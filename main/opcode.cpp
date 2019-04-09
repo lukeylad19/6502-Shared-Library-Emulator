@@ -3,6 +3,9 @@
 
 void ADC(){
 
-    std::cout<<"ADC entered"<< code<< int1 << int2 << endl;
+    string name = "Lukas";
+    { 
+       std::cout << "Name is: " << name; 
+    }
 
 }
