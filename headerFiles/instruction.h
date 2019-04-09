@@ -1,7 +1,7 @@
 #ifndef instruction_h
 #define instruction_h
 
-     enum opCode{
+     enum instruct{
 
         BRK = 0x00,
         ORA_x_ind = 0x01,
