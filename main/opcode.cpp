@@ -7,5 +7,6 @@ void ADC(){
     { 
        std::cout << "Name is: " << name; 
     }
-
 }
+
+ADC(); 
