@@ -3,7 +3,10 @@
 
 class opcode
 { public:
-        void ADC(){}; 
-
+ string name = "Lukas";
+    void printname() 
+    { 
+       cout << "Name is: " << name; 
+    }
 };
 #endif
