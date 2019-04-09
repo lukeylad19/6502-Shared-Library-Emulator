@@ -3,10 +3,7 @@
 
 class opcode
 { public:
- string name = "Lukas";
-    void printname() 
-    { 
-       cout << "Name is: " << name; 
-    }
+    void printname() ;
+    
 };
 #endif
