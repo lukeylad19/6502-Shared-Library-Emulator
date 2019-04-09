@@ -3,7 +3,6 @@
 
 class opcode
 { public:
-    void printname() ;
-    
+    void printname() ;  
 };
 #endif
