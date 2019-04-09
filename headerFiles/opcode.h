@@ -1,9 +1,9 @@
 #ifndef opcode_h
 #define opcode_h
 
-class opcode{
-    public:
+class opcode
+{ public:
         void ADC();
 
-} op;
+};
 #endif
