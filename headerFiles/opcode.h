@@ -3,7 +3,7 @@
 
 class opcode
 { public:
-        void ADC();
+        void ADC(){}; 
 
 };
 #endif
