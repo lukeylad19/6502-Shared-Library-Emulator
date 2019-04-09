@@ -1,7 +1,7 @@
 #include <iostream>
 #include <stdint.h>
 #include <string>
-#include "opcode.h"
+#include "instruction.h"
 
 using namespace std;
 int main( int c, char** argv){
