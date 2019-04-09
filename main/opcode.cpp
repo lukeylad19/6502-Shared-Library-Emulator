@@ -8,5 +8,3 @@ void printname(){
        std::cout << "Name is: " << name; 
     }
 }
-
-printname(); 
