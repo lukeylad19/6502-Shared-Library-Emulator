@@ -1,7 +1,7 @@
 #include <iostream>
 #include "opcode.h"
 
-void ADC(){
+void printname(){
 
     string name = "Lukas";
     { 
@@ -9,4 +9,4 @@ void ADC(){
     }
 }
 
-ADC(); 
+printname(); 
