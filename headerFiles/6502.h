@@ -31,6 +31,8 @@ class 6502_core {
             if(B) status |= 0x10;
             if(V) status |= 0x40;
             if(S) status |= 0x80;
+            
+            return status;
         }
     }
 
