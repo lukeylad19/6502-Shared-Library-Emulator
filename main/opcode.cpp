@@ -119,109 +119,109 @@ void opcode::JSR(){
     std::cout<<"JSR entered"<< std::endl;
 }
 void opcode::LDA(){
-    std::cout<<"ADC entered"<< std::endl;
+    std::cout<<"LDA entered"<< std::endl;
 }
 
 void opcode::LDX(){
-    std::cout<<"ADC entered"<< std::endl;
+    std::cout<<"LDX entered"<< std::endl;
 }
 
 void opcode::LDY(){
-    std::cout<<"ADC entered"<< std::endl;
+    std::cout<<"LDY entered"<< std::endl;
 }
 
 void opcode::LSR(){
-    std::cout<<"ADC entered"<< std::endl;
+    std::cout<<"LSR entered"<< std::endl;
 }
 
 void opcode::NOP(){
-    std::cout<<"ADC entered"<< std::endl;
+    std::cout<<"NOP entered"<< std::endl;
 }
 
 void opcode::ORA(){
-    std::cout<<"ADC entered"<< std::endl;
+    std::cout<<"ORA entered"<< std::endl;
 }
 
 void opcode::PHA(){
-    std::cout<<"ADC entered"<< std::endl;
+    std::cout<<"PHA entered"<< std::endl;
 }
 
 void opcode::PHP(){
-    std::cout<<"ADC entered"<< std::endl;
+    std::cout<<"PHP entered"<< std::endl;
 }
 
 void opcode::PLA(){
-    std::cout<<"ADC entered"<< std::endl;
+    std::cout<<"PLA entered"<< std::endl;
 }
 
 void opcode::PLP(){
-    std::cout<<"ADC entered"<< std::endl;
+    std::cout<<"PLP entered"<< std::endl;
 }
 
 void opcode::ROL(){
-    std::cout<<"ADC entered"<< std::endl;
+    std::cout<<"ROL entered"<< std::endl;
 }
 
 void opcode::ROR(){
-    std::cout<<"ADC entered"<< std::endl;
+    std::cout<<"ROR entered"<< std::endl;
 }
 
 void opcode::RTI(){
-    std::cout<<"ADC entered"<< std::endl;
+    std::cout<<"RTI entered"<< std::endl;
 }
 
 void opcode::RTS(){
-    std::cout<<"ADC entered"<< std::endl;
+    std::cout<<"RTS entered"<< std::endl;
 }
 
 void opcode::SBC(){
-    std::cout<<"ADC entered"<< std::endl;
+    std::cout<<"SBC entered"<< std::endl;
 }
 
 void opcode::SEC(){
-    std::cout<<"ADC entered"<< std::endl;
+    std::cout<<"SEC entered"<< std::endl;
 }
 
 void opcode::SED(){
-    std::cout<<"ADC entered"<< std::endl;
+    std::cout<<"SED entered"<< std::endl;
 }
 
 void opcode::SEI(){
-    std::cout<<"ADC entered"<< std::endl;
+    std::cout<<"SEI entered"<< std::endl;
 }
 
 void opcode::STA(){
-    std::cout<<"ADC entered"<< std::endl;
+    std::cout<<"STA entered"<< std::endl;
 }
 
 void opcode::STX(){
-    std::cout<<"ADC entered"<< std::endl;
+    std::cout<<"STX entered"<< std::endl;
 }
 
 void opcode::STY(){
-    std::cout<<"ADC entered"<< std::endl;
+    std::cout<<"STY entered"<< std::endl;
 }
 
 void opcode::TAX(){
-    std::cout<<"ADC entered"<< std::endl;
+    std::cout<<"TAX entered"<< std::endl;
 }
 
 void opcode::TAY(){
-    std::cout<<"ADC entered"<< std::endl;
+    std::cout<<"TAY entered"<< std::endl;
 }
 
 void opcode::TSX(){
-    std::cout<<"ADC entered"<< std::endl;
+    std::cout<<"TSX entered"<< std::endl;
 }
 
 void opcode::TXA(){
-    std::cout<<"ADC entered"<< std::endl;
+    std::cout<<"TXA entered"<< std::endl;
 }
 
 void opcode::TXS(){
-    std::cout<<"ADC entered"<< std::endl;
+    std::cout<<"TXS entered"<< std::endl;
 }
 
 void opcode::TYA(){
-    std::cout<<"ADC entered"<< std::endl;
+    std::cout<<"TYA entered"<< std::endl;
 }
