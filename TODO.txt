@@ -3,3 +3,4 @@
 3. 6502 class for registers and functions
 4. Completed 151 case switch case
 5. Make file for automatic shared libray compilation 
+6. Proper bin file read header (with proper bitmasking for bin file)
