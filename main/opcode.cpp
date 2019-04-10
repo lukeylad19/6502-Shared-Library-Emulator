@@ -118,3 +118,110 @@ void opcode::JMP(){
 void opcode::JSR(){
     std::cout<<"JSR entered"<< std::endl;
 }
+void opcode::LDA(){
+    std::cout<<"ADC entered"<< std::endl;
+}
+
+void opcode::LDX(){
+    std::cout<<"ADC entered"<< std::endl;
+}
+
+void opcode::LDY(){
+    std::cout<<"ADC entered"<< std::endl;
+}
+
+void opcode::LSR(){
+    std::cout<<"ADC entered"<< std::endl;
+}
+
+void opcode::NOP(){
+    std::cout<<"ADC entered"<< std::endl;
+}
+
+void opcode::ORA(){
+    std::cout<<"ADC entered"<< std::endl;
+}
+
+void opcode::PHA(){
+    std::cout<<"ADC entered"<< std::endl;
+}
+
+void opcode::PHP(){
+    std::cout<<"ADC entered"<< std::endl;
+}
+
+void opcode::PLA(){
+    std::cout<<"ADC entered"<< std::endl;
+}
+
+void opcode::PLP(){
+    std::cout<<"ADC entered"<< std::endl;
+}
+
+void opcode::ROL(){
+    std::cout<<"ADC entered"<< std::endl;
+}
+
+void opcode::ROR(){
+    std::cout<<"ADC entered"<< std::endl;
+}
+
+void opcode::RTI(){
+    std::cout<<"ADC entered"<< std::endl;
+}
+
+void opcode::RTS(){
+    std::cout<<"ADC entered"<< std::endl;
+}
+
+void opcode::SBC(){
+    std::cout<<"ADC entered"<< std::endl;
+}
+
+void opcode::SEC(){
+    std::cout<<"ADC entered"<< std::endl;
+}
+
+void opcode::SED(){
+    std::cout<<"ADC entered"<< std::endl;
+}
+
+void opcode::SEI(){
+    std::cout<<"ADC entered"<< std::endl;
+}
+
+void opcode::STA(){
+    std::cout<<"ADC entered"<< std::endl;
+}
+
+void opcode::STX(){
+    std::cout<<"ADC entered"<< std::endl;
+}
+
+void opcode::STY(){
+    std::cout<<"ADC entered"<< std::endl;
+}
+
+void opcode::TAX(){
+    std::cout<<"ADC entered"<< std::endl;
+}
+
+void opcode::TAY(){
+    std::cout<<"ADC entered"<< std::endl;
+}
+
+void opcode::TSX(){
+    std::cout<<"ADC entered"<< std::endl;
+}
+
+void opcode::TXA(){
+    std::cout<<"ADC entered"<< std::endl;
+}
+
+void opcode::TXS(){
+    std::cout<<"ADC entered"<< std::endl;
+}
+
+void opcode::TYA(){
+    std::cout<<"ADC entered"<< std::endl;
+}
