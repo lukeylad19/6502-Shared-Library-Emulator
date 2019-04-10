@@ -5,7 +5,34 @@ class opcode{
     public:
         //opcode();   
     void ADC();
-
+    void AND();
+    void ASL();
+    void BCC();
+    void BCS();
+    void BEQ();
+    void BIT();
+    void BMI();
+    void BNE();
+    void BPL();
+    void BRK();
+    void BVC();
+    void BVS();
+    void CLC();
+    void CLD();
+    void CLI();
+    void CLV();
+    void CMP();
+    void CPX();
+    void CPY();
+    void DEC();
+    void DEX();
+    void DEY();
+    void EOR();
+    void INC();
+    void INX();
+    void INY();
+    void JMP();
+    void JSR();
     void LDA();	
     void LDX();	
     void LDY();
