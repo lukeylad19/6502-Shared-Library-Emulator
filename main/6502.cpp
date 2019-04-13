@@ -5,7 +5,7 @@
     reset();
 }
 
-void stack_push(uint8_t byte){                     //push to 6502's Stack
+void 6502_core::stack_push(uint8_t byte){          //push to 6502's Stack
     M.write(0x0100+sp,byte);
     if(SP== 0x00){
         SP = 0xFF
@@ -15,7 +15,7 @@ void stack_push(uint8_t byte){                     //push to 6502's Stack
     }
 }
 
-uint8_t stack_pop(){                                //pop from the 6502's stack
+uint8_t 6502_core::stack_pop(){                    //pop from the 6502's stack
     if(SP == 0xFF){
         SP = 0x00;
     }
@@ -23,7 +23,7 @@ uint8_t stack_pop(){                                //pop from the 6502's stack
     return M.read(0x0100 + SP);
 }
 
-void 6502_core::run(){                          //execute 1 instruction
+void 6502_core::run(){                              //execute 1 instruction
     uint8_t opcode = M.read(PC++);
     execute(opcode);
 }
