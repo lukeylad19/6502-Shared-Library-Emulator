@@ -1,8 +1,18 @@
 #include <stdint.h>
+#include "memory.h"
 
 class 6502_core {
     
     private:
+    /*---Interrupt Routine Pointer addresses---*/
+    const uint16_t IRQ_H = 0xFFFF;
+    const unit16_t IRQ_L = 0xFFFE;
+    const uint16_t RESET_H = 0xFFFD;
+    const uint16_t RESET_L = 0xFFFC;
+    const uint16_t NMI_H = 0xFFFB;
+    const uint16_t NMI_L = 0xFFFA;
+    /*------------------------------------------*/
+
     uint8_t A;      // accumulator
     uint8_t X;      // X register
     uint8_t Y;      // Y register
@@ -35,16 +45,23 @@ class 6502_core {
             return status;
         }
     }
-
     /*-------------------------------------------------*/
+
+    6502_memory* M;
+
+    void stack_push(uint8_t);            //push to 6502 stack
+    uint8_t stack_pop();                 //pop from 6502 stack
+    void exectute(uint8_t);              //take an opcode and execute an instruction
 
     public:
 
-    void 6502_core();
+    void 6502_core(6502_memory);
 
-    void reset();
+    void run();                         //fetch and execute an instruction
 
-    void irq();
+    void reset();                       //reset the CPU
 
-    void nmi();
+    void irq();                         //interrupt
+
+    void nmi();                         //non maskable interrupt
 };
