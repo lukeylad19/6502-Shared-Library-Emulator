@@ -5,13 +5,13 @@
 #include "opcode.h"
 #include "memory.h"
 
-M6502_core::M6502_core(M6502_memory *mem){            //attach memory and reset
+M6502_core::M6502_core(M6502_memory *mem){              //attach memory and reset
     M = mem;
     reset();
     std::cout << "PC is: " << PC << std::endl;
 }
 
-void M6502_core::stack_push(uint8_t byte){           //push to 6502's Stack
+void M6502_core::stack_push(uint8_t byte){              //push to 6502's Stack
     M->write(0x0100+SP,byte);
     if(SP== 0x00){
         SP = 0xFF;
@@ -21,7 +21,7 @@ void M6502_core::stack_push(uint8_t byte){           //push to 6502's Stack
     }
 }
 
-uint8_t M6502_core::stack_pop(){                    //pop from the 6502's stack
+uint8_t M6502_core::stack_pop(){                        //pop from the 6502's stack
     if(SP == 0xFF){
         SP = 0x00;
     }
@@ -29,44 +29,44 @@ uint8_t M6502_core::stack_pop(){                    //pop from the 6502's stack
     return M->read(0x0100 + SP);
 }
 
-void M6502_core::run(){                                 //execute 1 instruction
+void M6502_core::run(){                                  //execute 1 instruction
     IR= M->read(PC); 
-    std::cout<< "IR is: " << unsigned(IR) << std::endl;   //fetch instruction
+    std::cout<< "IR is: " << unsigned(IR) << std::endl;  //fetch instruction
     execute(IR);
     PC++;
 }
 
 void M6502_core::reset(){
 
-    A=0x00;                                         //clear the registers AXY
+    A=0x00;                                              //clear the registers AXY
     X=0x00;
     Y=0x00;
 
-    PC = (M->read(RESET_H)<<8) +M->read(RESET_L);     //reset the program counter
+    PC = (M->read(RESET_H)<<8) +M->read(RESET_L);        //reset the program counter
     std::cout << "set PC to: " << PC << std::endl;
 
-    SP = 0xFD;                                      //reset the stack pointer
-    write_SR(0x02);                                 //reset the status register
+    SP = 0xFD;                                           //reset the stack pointer
+    write_SR(0x02);                                      //reset the status register
 }
 
 void M6502_core::irq(){
-    if(!SR.I){                                          //check to see if interrupts are disabled
-        SR.B = false;                                   //set break false
-        stack_push((PC >> 8)& 0xFF);                    //push upper byte of PC to stack
-        stack_push(PC&0xFF);                            //push lower byte of PC to stack
-        stack_push(read_SR());                          //push status register to stack
-        SR.I = true;                                    //disable interrupts
-        PC = ((M->read(IRQ_H)<<8)+M->read(IRQ_L));      //update PC with IRQ routine
+    if(!SR.I){                                           //check to see if interrupts are disabled
+        SR.B = false;                                    //set break false
+        stack_push((PC >> 8)& 0xFF);                     //push upper byte of PC to stack
+        stack_push(PC&0xFF);                             //push lower byte of PC to stack
+        stack_push(read_SR());                           //push status register to stack
+        SR.I = true;                                     //disable interrupts
+        PC = ((M->read(IRQ_H)<<8)+M->read(IRQ_L));       //update PC with IRQ routine
     }
 }
 
 void M6502_core::nmi(){
-    SR.B = false;                                   //set break false
-    stack_push((PC >> 8)& 0xFF);                    //push upper byte of PC to stack
-    stack_push(PC&0xFF);                            //push lower byte of PC to stack
-    stack_push(read_SR());                          //push status register to stack
-    SR.I = true;                                    //disable interrupts
-    PC = ((M->read(NMI_H)<<8)+M->read(NMI_L));      //update PC with NMI routine
+    SR.B = false;                                       //set break false
+    stack_push((PC >> 8)& 0xFF);                        //push upper byte of PC to stack
+    stack_push(PC&0xFF);                                //push lower byte of PC to stack
+    stack_push(read_SR());                              //push status register to stack
+    SR.I = true;                                        //disable interrupts
+    PC = ((M->read(NMI_H)<<8)+M->read(NMI_L));          //update PC with NMI routine
 }
 
 /*void M6502_core::execute(uint8_t val){
