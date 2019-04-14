@@ -67,6 +67,18 @@ class M6502_core {
     uint8_t stack_pop();                 //pop from 6502 stack
     void execute(uint8_t);              //take an opcode and execute an instruction
 
+    /*----------------Address Helpsers-------------------*/
+    /*               See SwitchCase.cpp                  */
+    uint8_t read_zpg();
+    uint8_t read_zpg(uint8_t);
+    uint8_t read_rel();
+    uint8_t read_abs();
+    uint8_t read_abs(uint8_t);
+    uint16_t read_ind();
+    uint8_t read_ind_x();
+    uint8_t read_ind_y();
+    /*---------------------------------------------------*/
+
     public:
 
     M6502_core(M6502_memory*);

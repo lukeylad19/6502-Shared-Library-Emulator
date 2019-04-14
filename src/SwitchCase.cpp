@@ -5,6 +5,47 @@
 //#include "opcode.h"
 //void execute(uint8_t);
 
+/*------------------------------------Addressing Helpers------------------------------------------*/
+uint8_t M6502_core::read_zpg(){                             //read using zero page addressing
+    return M->read(0x0000+(M->read(++PC)));
+}
+
+uint8_t M6502_core::read_zpg(uint8_t index){                //read using indexed zero page addressing pass X or Y register
+    return M->read(0x0000+(M->read(++PC))+index);
+}
+
+uint8_t M6502_core::read_rel(){                             //read using relative addressing
+    uint16_t tmp = PC;
+    return M->read(tmp+signed(M->read(++PC)));
+}
+uint8_t M6502_core::read_abs(){                             //read using absolute addressing
+    uint8_t temp = M->read(M->readWord(++PC));
+    PC++;
+    return temp;
+}
+
+uint8_t M6502_core::read_abs(uint8_t index){                //read using indexed absolute addressing pass X or Y register
+    uint8_t temp = M->read(M->readWord(++PC)+index);
+    PC++;
+    return temp;
+}
+
+uint16_t M6502_core::read_ind(){                            //read using indirect addressing, returns a word
+    uint16_t temp = M->readWord(M->readWord(++PC));
+    PC++;
+    return temp;
+}
+
+uint8_t M6502_core::read_ind_x(){                           //read using X-Indexed Indirext addressing
+    return M->read(M->readWord(M->read(++PC)+X));
+}
+
+uint8_t M6502_core::read_ind_y(){                           //read using Indirect Y-Indexed addressing
+    return M->read(M->readWord(M->read(++PC))+Y);
+}
+
+/*------------------------------------------------------------------------------------------------*/
+
 void M6502_core::execute(uint8_t val){
     switch (val){
 
