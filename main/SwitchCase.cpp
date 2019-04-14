@@ -15,7 +15,7 @@
 
     return 0;
 }*/
-void execute(uint8_t val){
+void M6502_core::execute(uint8_t val){
     switch (val){
 
         case instruct::BRK:
