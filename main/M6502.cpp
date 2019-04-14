@@ -11,7 +11,7 @@ M6502_core::M6502_core(M6502_memory *mem){            //attach memory and reset
     std::cout << "PC is: " << PC << std::endl;
 }
 
-void M6502_core::stack_push(uint8_t byte){          //push to 6502's Stack
+void M6502_core::stack_push(uint8_t byte){           //push to 6502's Stack
     M->write(0x0100+SP,byte);
     if(SP== 0x00){
         SP = 0xFF;
@@ -29,9 +29,9 @@ uint8_t M6502_core::stack_pop(){                    //pop from the 6502's stack
     return M->read(0x0100 + SP);
 }
 
-void M6502_core::run(){                              //execute 1 instruction
+void M6502_core::run(){                                 //execute 1 instruction
     IR= M->read(PC); 
-    std::cout<< "IR is: " << unsigned(IR) << std::endl;                           //fetch instruction
+    std::cout<< "IR is: " << unsigned(IR) << std::endl;   //fetch instruction
     execute(IR);
     PC++;
 }
