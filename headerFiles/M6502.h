@@ -24,7 +24,7 @@ class M6502_core {
     uint8_t IR;     // Instruction Register
 
     /*---------------Status Register-------------------*/
-    enum SR{
+    struct SR{
         bool    C;      // Carry Flag               SR bit 0
         bool    Z;      // Zero FLag                SR bit 1
         bool    I;      // Interrupt Disable Flag   SR bit 2
@@ -33,21 +33,32 @@ class M6502_core {
         const bool U = 1;   // Unused               SR bit 5
         bool    V;      // Overflow Flag            SR bit 6
         bool    S;      // Sign Flag                SR bit 7
-
-        uint8_t value(){
-            uint8_t status = 0x20;
-
-            if(C) status |= 0x01;
-            if(Z) status |= 0x02;
-            if(I) status |= 0x04;
-            if(D) status |= 0x08;
-            if(B) status |= 0x10;
-            if(V) status |= 0x40;
-            if(S) status |= 0x80;
-            
-            return status;
-        }
     }
+
+    uint8_t read_SR(){
+        uint8_t status = 0x20;
+
+        if(C) status |= 0x01;
+        if(Z) status |= 0x02;
+        if(I) status |= 0x04;
+        if(D) status |= 0x08;
+        if(B) status |= 0x10;
+        if(V) status |= 0x40;
+        if(S) status |= 0x80;
+            
+        return status;
+    }
+
+    void write_SR(uint8_t status){
+        SR.C = status & 0x01;
+        SR.Z = status & 0x02;
+        SR.I = status & 0x04;
+        SR.D = status & 0x08;
+        SR.B = status & 0x10;
+        SR.V = status & 0x40;
+        SR.S = status & 0x80;
+    }
+
     /*-------------------------------------------------*/
 
     M6502_memory* M;

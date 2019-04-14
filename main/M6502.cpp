@@ -29,8 +29,8 @@ uint8_t M6502_core::stack_pop(){                    //pop from the 6502's stack
 }
 
 void M6502_core::run(){                              //execute 1 instruction
-    uint8_t opcode = M.read(PC++);
-    execute(opcode);
+    IR= M.read(PC++);                                //fetch instruction
+    execute(IR);
 }
 
 void M6502_core::reset(){
@@ -42,7 +42,7 @@ void M6502_core::reset(){
     PC = (M.read(RESET_H)<<8) +M.read(RESET_L);     //reset the program counter
 
     SP = 0xFD;                                      //reset the stack pointer
-    SR = 0x20;                                      //reset the status register
+    write_SR(0x02);                                 //reset the status register
 }
 
 void M6502_core::irq(){
