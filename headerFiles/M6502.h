@@ -69,7 +69,7 @@ class M6502_core {
 
     public:
 
-    M6502_core(M6502_memory);
+    M6502_core(M6502_memory*);
 
     void run();                         //fetch and execute an instruction
 

@@ -5,8 +5,8 @@
 #include "opcode.h"
 #include "memory.h"
 
-M6502_core::M6502_core(M6502_memory mem){            //attach memory and reset
-    M = &mem;
+M6502_core::M6502_core(M6502_memory *mem){            //attach memory and reset
+    M = mem;
     reset();
     std::cout << "PC is: " << PC << std::endl;
 }
@@ -31,7 +31,6 @@ uint8_t M6502_core::stack_pop(){                    //pop from the 6502's stack
 
 void M6502_core::run(){                              //execute 1 instruction
     IR= M->read(PC); 
-    std::cout<< "M Read: " << unsigned(M->read(PC)) << std::endl;
     std::cout<< "IR is: " << unsigned(IR) << std::endl;                           //fetch instruction
     execute(IR);
     PC++;
