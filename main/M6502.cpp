@@ -61,12 +61,12 @@ void M6502_core::irq(){
 }
 
 void M6502_core::nmi(){
-    SR.B = false;                                       //set break false
-    stack_push((PC >> 8)& 0xFF);                        //push upper byte of PC to stack
-    stack_push(PC&0xFF);                                //push lower byte of PC to stack
-    stack_push(read_SR());                              //push status register to stack
-    SR.I = true;                                        //disable interrupts
-    PC = ((M->read(NMI_H)<<8)+M->read(NMI_L));          //update PC with NMI routine
+    SR.B = false;                                        //set break false
+    stack_push((PC >> 8)& 0xFF);                         //push upper byte of PC to stack
+    stack_push(PC&0xFF);                                 //push lower byte of PC to stack
+    stack_push(read_SR());                               //push status register to stack
+    SR.I = true;                                         //disable interrupts
+    PC = ((M->read(NMI_H)<<8)+M->read(NMI_L));           //update PC with NMI routine
 }
 
 /*void M6502_core::execute(uint8_t val){
