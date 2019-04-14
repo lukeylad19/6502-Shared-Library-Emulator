@@ -1,17 +1,21 @@
 #include <iostream>
-#include <stdint.h>
-#include <string>
 #include "instruction.h"
-#include "opcode.h"
+#include "M6502.h"
+//#include "opcode.h"
+//void execute(uint8_t);
+/*int main( int c, char** argv){
 
-int main( int c, char** argv){
+  //  opcode op = opcode();
+    uint8_t test = 10111000;
+   // int val;
+   // std::cout << "enter OpCode:" << std::endl;
+   // std::cin >> val;
 
-    opcode op = opcode();
+    execute(test);
 
-    int val;
-    std::cout << "enter OpCode:" << std::endl;
-    std::cin >> val;
-
+    return 0;
+}*/
+void execute(uint8_t val){
     switch (val){
 
         case instruct::BRK:
@@ -142,7 +146,6 @@ int main( int c, char** argv){
             std::cout << "Valid Code" << std::endl;
             break;
 
-
         case instruct::SEC_impl:
             std::cout << "Valid Code" << std::endl;
             break;
@@ -237,7 +240,6 @@ int main( int c, char** argv){
 
         case instruct::ADC_x_ind:
             std::cout << "Valid Code" << std::endl;
-               op.ADC();
             break;
 
         case instruct::ADC_zpg:
@@ -621,7 +623,5 @@ int main( int c, char** argv){
             std::cout << "I cant find this code!" << std::endl;
         break;
     }
-
-
-    return 0;
 }
+
