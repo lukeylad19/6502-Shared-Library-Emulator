@@ -8,6 +8,7 @@
 M6502_core::M6502_core(M6502_memory mem){            //attach memory and reset
     M = &mem;
     reset();
+    std::cout << "PC is: " << PC << std::endl;
 }
 
 void M6502_core::stack_push(uint8_t byte){          //push to 6502's Stack
@@ -29,8 +30,10 @@ uint8_t M6502_core::stack_pop(){                    //pop from the 6502's stack
 }
 
 void M6502_core::run(){                              //execute 1 instruction
-    IR= M->read(PC++);                                //fetch instruction
+    IR= M->read(PC++); 
+    std::cout<< "IR is: " << unsigned(IR) << std::endl;                           //fetch instruction
     execute(IR);
+
 }
 
 void M6502_core::reset(){
@@ -50,9 +53,9 @@ void M6502_core::irq(){
         SR.B = false;                                   //set break false
         stack_push((PC >> 8)& 0xFF);                    //push upper byte of PC to stack
         stack_push(PC&0xFF);                            //push lower byte of PC to stack
-        stack_push(read_SR());                                 //push status register to stack
+        stack_push(read_SR());                          //push status register to stack
         SR.I = true;                                    //disable interrupts
-        PC = ((M->read(IRQ_H)<<8)+M->read(IRQ_L));        //update PC with IRQ routine
+        PC = ((M->read(IRQ_H)<<8)+M->read(IRQ_L));      //update PC with IRQ routine
     }
 }
 
@@ -60,12 +63,12 @@ void M6502_core::nmi(){
     SR.B = false;                                   //set break false
     stack_push((PC >> 8)& 0xFF);                    //push upper byte of PC to stack
     stack_push(PC&0xFF);                            //push lower byte of PC to stack
-    stack_push(read_SR());                                 //push status register to stack
+    stack_push(read_SR());                          //push status register to stack
     SR.I = true;                                    //disable interrupts
-    PC = ((M->read(NMI_H)<<8)+M->read(NMI_L));        //update PC with NMI routine
+    PC = ((M->read(NMI_H)<<8)+M->read(NMI_L));      //update PC with NMI routine
 }
 
-void M6502_core::execute(uint8_t val){
+/*void M6502_core::execute(uint8_t val){
     std::cout << val <<"execute" << std::endl;
 
-}
+}*/
