@@ -12,14 +12,18 @@ M6502_memory::M6502_memory(std::string romfile){
         buffer = new char[size];
         rom.read(buffer,size);
         rom.close();
+        std::cout << "File Opened Succesfully" << std::endl;
     }
     else{
         std::cout << "Error Opening File" << std::endl;
     }
 
     uint16_t start = (1 << 16)-size;
-    for(int i=0;(start+i)<size;i++){
+    std::cout << "start: " << start << " size: " << size << std::endl;
+    std::cout << "Memory Dump:" << std::endl;
+    for(int i=0;(start+i)<(1<<16);i++){
         M[start+i] = buffer[i];
+        std::cout << std::hex << unsigned(start+i) << ": "<< unsigned(M[start+i]) << std::endl;
     }
 }
 

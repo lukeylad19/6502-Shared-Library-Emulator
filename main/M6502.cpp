@@ -30,10 +30,11 @@ uint8_t M6502_core::stack_pop(){                    //pop from the 6502's stack
 }
 
 void M6502_core::run(){                              //execute 1 instruction
-    IR= M->read(PC++); 
+    IR= M->read(PC); 
+    std::cout<< "M Read: " << unsigned(M->read(PC)) << std::endl;
     std::cout<< "IR is: " << unsigned(IR) << std::endl;                           //fetch instruction
     execute(IR);
-
+    PC++;
 }
 
 void M6502_core::reset(){
@@ -43,6 +44,7 @@ void M6502_core::reset(){
     Y=0x00;
 
     PC = (M->read(RESET_H)<<8) +M->read(RESET_L);     //reset the program counter
+    std::cout << "set PC to: " << PC << std::endl;
 
     SP = 0xFD;                                      //reset the stack pointer
     write_SR(0x02);                                 //reset the status register

@@ -6,15 +6,8 @@
 //void execute(uint8_t);
 int main( int c, char** argv){
 
-  //  opcode op = opcode();
-    uint8_t test = 0xB9;
-   // int val;
-   // std::cout << "enter OpCode:" << std::endl;
-   // std::cin >> val;
-
-    
-
-    M6502_core::execute(test);
+    M6502_core cpu = M6502_core(M6502_memory("test_nop.bin"));
+    cpu.run();
 
     return 0;
 }
