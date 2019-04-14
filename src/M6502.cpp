@@ -2,7 +2,6 @@
 #include <stdint.h>
 #include <string>
 #include "M6502.h"
-#include "opcode.h"
 #include "memory.h"
 
 M6502_core::M6502_core(M6502_memory *mem){              //attach memory and reset

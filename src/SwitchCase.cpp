@@ -4,13 +4,6 @@
 #include "M6502.h"
 //#include "opcode.h"
 //void execute(uint8_t);
-int main( int c, char** argv){
-    M6502_memory* mem = new M6502_memory("test_nop.bin");
-    M6502_core cpu = M6502_core(mem);
-    cpu.run();
-
-    return 0;
-}
 
 void M6502_core::execute(uint8_t val){
     switch (val){
