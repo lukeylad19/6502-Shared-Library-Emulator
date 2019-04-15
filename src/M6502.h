@@ -32,7 +32,7 @@ class M6502_core {
         bool    B;      // Break Flag               SR bit 4
         const bool U = 1;   // Unused               SR bit 5
         bool    V;      // Overflow Flag            SR bit 6
-        bool    S;      // Sign Flag                SR bit 7
+        bool    S;      // Sign Flag (N)            SR bit 7
     }SR;
 
     uint8_t read_SR(){

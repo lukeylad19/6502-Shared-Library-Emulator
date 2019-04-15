@@ -51,38 +51,53 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::BRK:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            nmi();
+            SR.B = 1;
             break;
             
         case instruct::ORA_x_ind:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            A |= read_ind_x();
             break;
 
         case instruct::ORA_zpg:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            A |= read_zpg();
             break;
 
         case instruct::ASL_zpg:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            M->write(PC,(read_zpg() << 1));
             break;
 
         case instruct::PHP_impl:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            stack_push(read_SR());
             break;
 
         case instruct::ORA_n:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+             A |= M->read(++PC);
             break;
 
         case instruct::ASL_a:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            SR.C=(A&0x80)>>7;
+            A = (A<<1);
             break;
 
         case instruct::ORA_abs:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            A|= read_abs();
             break;
 
-        case instruct::ASL_abs:
+        case instruct::ASL_abs:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint8_t tmp;
+            tmp = read_abs();
+            SR.C=(tmp&0x80)>>7;
+            M->write(M->readWord(PC+1),tmp<<1);
+            }
             break;
 
         case instruct::BPL_rel:
@@ -91,14 +106,21 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::ORA_ind_y:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            A|= read_ind_y();
             break;
 
         case instruct::ORA_zpg_x:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            A|= read_zpg(X);
             break;
 
-        case instruct::ASL_zpg_x:
+        case instruct::ASL_zpg_x:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint8_t tmp;
+            tmp = read_zpg(X);
+            SR.C=(tmp&0x80)>>7;
+            M->write(M->readWord(PC+1+X),read_zpg(X) <<1);
+            }
             break;
 
         case instruct::CLC_impl:
@@ -107,14 +129,21 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::ORA_abs_y:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            A|= read_abs(Y);
             break;
 
         case instruct::ORA_abs_x:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            A|= read_abs(X);
             break;
 
-        case instruct::ASL_abs_x:
+        case instruct::ASL_abs_x:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint8_t tmp;
+            tmp = read_abs();
+            SR.C=(tmp&0x80)>>7;
+            M->write(M->readWord(PC+1),tmp << 1);
+            }
             break;
 
         case instruct::JSR_abs:
