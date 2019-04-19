@@ -153,6 +153,10 @@ void M6502_core::execute(uint8_t val){
         case instruct::AND_x_ind:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             A = ((PC+1) & read_ind_x());
+            SR.S = (A>>7);
+            if(((PC+1) & read_ind_x()) == 0){
+                SR.Z = 1;
+            }
             break;
 
         case instruct::BIT_zpg:
@@ -174,6 +178,10 @@ void M6502_core::execute(uint8_t val){
         case instruct::AND_n:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             A = ((PC+1) & A);
+            SR.S = (A>>7);
+            if(((PC+1) & A )== 0){
+                SR.Z = 1;
+            }
             break;
 
         case instruct::ROL_a:
@@ -187,6 +195,10 @@ void M6502_core::execute(uint8_t val){
         case instruct::AND_abs:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             A = (read_zpg(PC+1) & A);
+            SR.S = (A>>7);
+            if((read_zpg(PC+1) & A)== 0){
+                SR.Z = 1;
+            }
             break;
 
         case instruct::ROL_abs:
@@ -200,11 +212,19 @@ void M6502_core::execute(uint8_t val){
         case instruct::AND_ind_y:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             A = ((PC+1) & read_ind_y());
+            SR.S = (A>>7);
+            if(((PC+1) & read_ind_y())== 0){
+                SR.Z = 1;
+            }
             break;
 
         case instruct::AND_zpg_x:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             A = (read_zpg(PC+1) & X);
+            SR.S = (A>>7);
+            if((read_zpg(PC+1) & X)== 0){
+                SR.Z = 1;
+            }
             break;
 
         case instruct::ROL_zpg_x:
@@ -218,11 +238,19 @@ void M6502_core::execute(uint8_t val){
         case instruct::AND_abs_y:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             A =((PC+1) &  Y);
+            SR.S = (A>>7);
+            if(((PC+1) &  Y)== 0){
+                SR.Z = 1;
+            }
             break;
 
         case instruct::AND_abs_x:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             A = ((PC+1) & X);
+            SR.S = (A>>7);
+            if(((PC+1) & X)== 0){
+                SR.Z = 1;
+            }
             break;
 
         case instruct::ROL_abs_x:
