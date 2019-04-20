@@ -160,9 +160,7 @@ void M6502_core::execute(uint8_t val){
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             A = A & read_ind_x();
             SR.S = (A>>7);
-            if((A & read_ind_x()) == 0){
-                SR.Z = 1;
-            }
+            SR.Z = A;
             break;
 
         case instruct::BIT_zpg:
@@ -188,9 +186,7 @@ void M6502_core::execute(uint8_t val){
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             A = (A & M->read(++PC));
             SR.S = (A>>7);
-            if( (A & M->read(++PC))== 0){
-                SR.Z = 1;
-            }
+            SR.Z = A;
             break;
 
         case instruct::ROL_a:
@@ -208,9 +204,7 @@ void M6502_core::execute(uint8_t val){
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             A = (read_abs(X) & A);
             SR.S = (A>>7);
-            if((read_abs(X) & A)== 0){
-                SR.Z = 1;
-            }
+            SR.Z = A;
             break;
 
         case instruct::ROL_abs:
@@ -228,18 +222,14 @@ void M6502_core::execute(uint8_t val){
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             A = A & read_ind_y();
             SR.S = (A>>7);
-            if( (A & read_ind_y()) == 0){
-                SR.Z = 1;
-            }
+            SR.Z = A;
             break;
 
         case instruct::AND_zpg_x:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             A = (read_zpg(X) & X);
             SR.S = (A>>7);
-            if((read_zpg(X) & X)== 0){
-                SR.Z = 1;
-            }
+            SR.Z = A;
             break;
 
         case instruct::ROL_zpg_x:
@@ -254,18 +244,14 @@ void M6502_core::execute(uint8_t val){
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             A =(read_abs(Y) &  Y);
             SR.S = (A>>7);
-            if((read_abs(Y) &  Y)== 0){
-                SR.Z = 1;
-            }
+            SR.Z = A;
             break;
 
         case instruct::AND_abs_x:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             A = (read_abs(X) & X);
             SR.S = (A>>7);
-            if((read_abs(X) & X)== 0){
-                SR.Z = 1;
-            }
+            SR.Z = A;
             break;
 
         case instruct::ROL_abs_x:
