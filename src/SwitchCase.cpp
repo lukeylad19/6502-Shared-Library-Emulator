@@ -81,7 +81,7 @@ void M6502_core::execute(uint8_t val){
             stack_push(read_SR());
             stack_push(PC+2);
             break;
-            
+
         case instruct::ORA_x_ind:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             A |= read_ind_x();
@@ -263,6 +263,8 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::SEC_impl:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            //Sets Carry Flag
+            SR.C = 1;
             break;
 
         case instruct::AND_abs_y:
@@ -421,6 +423,8 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::SEI_impl:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            //Sets Interrupt Disable Status
+            SR.I = 1;
             break;
 
         case instruct::ADC_abs_y:
@@ -461,6 +465,12 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::TXA_impl:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            //Transfers the X index to the Accumulator
+            A = X;
+            //Stets the Zero Flag to the value if it is zero
+            SR.Z = A;
+            //Sets the Negative/Status Flag to bit 7 of the value
+            SR.S = A>>7;
             break;
 
         case instruct::STY_abs:
@@ -492,7 +502,7 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::STY_zpg_x:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            store_zpg_x(Y);
+            store_zpg(Y,X);
             break;
 
         case instruct::STA_zpg_x:
@@ -502,11 +512,17 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::STX_zpg_y:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            store_zpg_y(X);
+            store_zpg(X, Y);
             break;
 
         case instruct::TYA_impl:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            //Transfers the Y index to the accumulator
+            A = Y;
+            //Sets the Zero Flag if the value was 0
+            SR.Z = A;
+            //Gets bit 7 of the value and sets the Negative flag to that bit
+            SR.S = A>>7;
             break;
 
         case instruct::STA_abs_y:
@@ -516,6 +532,8 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::TXS_impl:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            //Transfers the X index to the stack register
+            SP = X;
             break;
 
         case instruct::STA_abs_x:
@@ -557,6 +575,12 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::TAX_impl:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            //Transfers the Accumulator to the X index
+            X = A;
+            //Sets the Zero Flag to the value if it is zero
+            SR.Z = X;
+            //Sets the Negative/Status register to bit 7 of the value
+            SR.S = X>>7;
             break;
 
         case instruct::LDA_abs:
@@ -597,7 +621,14 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::TSX_impl:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            //Transfers the Stack Pointer to the X index
+            X = SP;
+            //Sets the Zero Flag to the value if it is zero
+            SR.Z = X;
+            //Sets the Negative/Status register to bit 7 of the value
+            SR.S = X>>7;
             break;
+
 
         case instruct::LDY_abs_x:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
@@ -704,17 +735,40 @@ void M6502_core::execute(uint8_t val){
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             break;
 
-        case instruct::SBC_x_ind:
+        case instruct::SBC_x_ind:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint8_t temp;
+            uint8_t checkV;
+            temp = read_ind_x();
+            checkV = (A>>7 & temp>>7);
+            A = A-temp-SR.C;
+            SR.Z = A;
+            SR.S = A>>7;
+            if(checkV){
+             SR.V= !(temp>>7 & A>>7);
+           }
             break;
+        }
+
 
         case instruct::CPX_zpg:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             break;
 
-        case instruct::SBC_zpg:
+        case instruct::SBC_zpg:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint8_t temp;
+            uint8_t checkV;
+            temp = read_zpg();
+            checkV = (A>>7 & temp>>7);
+            A = A-temp-SR.C;
+            SR.Z = A;
+            SR.S = A>>7;
+            if(checkV){
+              SR.V= !(temp>>7 & A>>7);
+            }
             break;
+          }
 
         case instruct::INC_zpg:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
@@ -724,9 +778,21 @@ void M6502_core::execute(uint8_t val){
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             break;
 
-        case instruct::SBC_n:
+        case instruct::SBC_n:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint8_t temp;
+            uint8_t checkV;
+            temp = M->read(++PC);
+            checkV = (A>>7 & temp>>7);
+            A = A-temp-SR.C;
+            SR.Z = A;
+            SR.S = A>>7;
+            if(checkV){
+              SR.V= !(temp>>7 & A>>7);
+            }
             break;
+          }
+
 
         case instruct::NOP_impl:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
@@ -736,9 +802,20 @@ void M6502_core::execute(uint8_t val){
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             break;
 
-        case instruct::SBC_abs:
+        case instruct::SBC_abs:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint8_t temp;
+            uint8_t checkV;
+            temp = read_abs();
+            checkV = (A>>7 & temp>>7);
+            A = A-temp-SR.C;
+            SR.Z = A;
+            SR.S = A>>7;
+            if(checkV){
+              SR.V= !(temp>>7 & A>>7);
+            }
             break;
+          }
 
         case instruct::INC_abs:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
@@ -751,13 +828,35 @@ void M6502_core::execute(uint8_t val){
             }
             break;
 
-        case instruct::SBC_ind_y:
-            std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            break;
+       case instruct::SBC_ind_y:{
+           std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+           uint8_t temp;
+           uint8_t checkV;
+           temp = read_ind_y();
+           checkV = (A>>7 & temp>>7);
+           A = A-temp-SR.C;
+           SR.Z = A;
+           SR.S = A>>7;
+           if(checkV){
+             SR.V= !(temp>>7 & A>>7);
+           }
+           break;
+         }
 
-        case instruct::SBC_zpg_x:
-            std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            break;
+      case instruct::SBC_zpg_x:{
+          std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+          uint8_t temp;
+          uint8_t checkV;
+          temp = read_zpg(X);
+          checkV = (A>>7 & temp>>7);
+          A = A-temp-SR.C;
+          SR.Z = A;
+          SR.S = A>>7;
+          if(checkV){
+            SR.V= !(temp>>7 & A>>7);
+          }
+         break;
+       }
 
         case instruct::INC_zpg_x:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
@@ -765,15 +864,39 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::SED_impl:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            //Sets Decimal Flag
+            SR.D = 1;
             break;
 
-        case instruct::SBC_abs_y:
+        case instruct::SBC_abs_y:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint8_t temp;
+            uint8_t checkV;
+            temp = read_zpg(++PC);
+            checkV = (A>>7 & temp>>7);
+            A = A-temp-SR.C;
+            SR.Z = A;
+            SR.S = A>>7;
+            if(checkV){
+              SR.V= !(temp>>7 & A>>7);
+            }
             break;
+          }
 
-        case instruct::SBC_abs_x:
-            std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            break;
+       case instruct::SBC_abs_x:{
+           std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+           uint8_t temp;
+           uint8_t checkV;
+           temp = read_abs(X);
+           checkV = (A>>7 & temp>>7);
+           A = A-temp-SR.C;
+           SR.Z = A;
+           SR.S = A>>7;
+           if(checkV){
+             SR.V= !(temp>>7 & A>>7);
+           }
+           break;
+         }
 
         case instruct::INC_abs_x:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
@@ -788,4 +911,3 @@ void M6502_core::execute(uint8_t val){
         break;
     }
 }
-
