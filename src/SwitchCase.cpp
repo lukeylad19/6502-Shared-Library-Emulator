@@ -158,18 +158,18 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::AND_x_ind:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            A = ((PC+1) & read_ind_x());
+            A = A & read_ind_x();
             SR.S = (A>>7);
-            if(((PC+1) & read_ind_x()) == 0){
+            if((A & read_ind_x()) == 0){
                 SR.Z = 1;
             }
             break;
 
         case instruct::BIT_zpg:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            SR.S = read_zpg(PC+1) >> 7;
-            SR.V = read_zpg(PC+1) >> 6;
-            SR.Z = A & read_zpg(PC+1);
+            SR.S = read_zpg() >> 7;
+            SR.V = read_zpg() >> 6;
+            SR.Z = A & read_zpg();
             break;
 
         case instruct::NAD_zpg:
@@ -186,9 +186,9 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::AND_n:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            A = ((PC+1) & A);
+            A = (A & M->read(++PC));
             SR.S = (A>>7);
-            if(((PC+1) & A )== 0){
+            if( (A & M->read(++PC))== 0){
                 SR.Z = 1;
             }
             break;
@@ -199,16 +199,16 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::BIT_abs:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            SR.S = read_abs(PC+1) >> 7;
-            SR.V = read_abs(PC+1) >> 6;
-            SR.Z = A & read_abs(PC+1);
+            SR.S = read_abs() >> 7;
+            SR.V = read_abs() >> 6;
+            SR.Z = A & read_abs();
             break;
 
         case instruct::AND_abs:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            A = (read_abs(PC+1) & A);
+            A = (read_abs(X) & A);
             SR.S = (A>>7);
-            if((read_abs(PC+1) & A)== 0){
+            if((read_abs(X) & A)== 0){
                 SR.Z = 1;
             }
             break;
@@ -226,18 +226,18 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::AND_ind_y:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            A = ((PC+1) & read_ind_y());
+            A = A & read_ind_y();
             SR.S = (A>>7);
-            if(((PC+1) & read_ind_y())== 0){
+            if( (A & read_ind_y()) == 0){
                 SR.Z = 1;
             }
             break;
 
         case instruct::AND_zpg_x:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            A = (read_zpg(PC+1) & X);
+            A = (read_zpg(X) & X);
             SR.S = (A>>7);
-            if((read_zpg(PC+1) & X)== 0){
+            if((read_zpg(X) & X)== 0){
                 SR.Z = 1;
             }
             break;
@@ -252,18 +252,18 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::AND_abs_y:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            A =(read_abs(PC+1) &  Y);
+            A =(read_abs(Y) &  Y);
             SR.S = (A>>7);
-            if((read_abs(PC+1) &  Y)== 0){
+            if((read_abs(Y) &  Y)== 0){
                 SR.Z = 1;
             }
             break;
 
         case instruct::AND_abs_x:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            A = (read_abs(PC+1) & X);
+            A = (read_abs(X) & X);
             SR.S = (A>>7);
-            if((read_abs(PC+1) & X)== 0){
+            if((read_abs(X) & X)== 0){
                 SR.Z = 1;
             }
             break;
@@ -593,6 +593,15 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::CMP_x_ind:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            if((A-(M->read(PC+1)) < 0)){
+                SR.S = M->read(PC+1) >> 7;
+            }
+            if((A-(M->read(PC+1)) == 0)){
+                SR.Z = 1;
+            }
+            if((A-(M->read(PC+1)) >= 0)){
+                SR.C = 1;
+            }
             break;
 
         case instruct::CPY_zpg:
