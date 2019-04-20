@@ -77,6 +77,12 @@ class M6502_core {
     uint16_t read_ind();
     uint8_t read_ind_x();
     uint8_t read_ind_y();
+    void store_zpg(uint8_t);
+    void store_zpg(uint8_t,uint8_t);
+    void store_abs(uint8_t);
+    void store_abs(uint8_t,uint8_t);
+    void store_ind_x(uint8_t);
+    void store_ind_y(uint8_t);
     /*---------------------------------------------------*/
 
     public:

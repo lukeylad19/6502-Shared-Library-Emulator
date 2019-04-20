@@ -44,6 +44,31 @@ uint8_t M6502_core::read_ind_y(){                           //read using Indirec
     return M->read(M->readWord(M->read(++PC))+Y);
 }
 
+void M6502_core::store_zpg(uint8_t value){                  //store to zero page index supplied by instruction
+    M->write(M->read(++PC), value);
+}
+
+void M6502_core::store_zpg(uint8_t value, uint8_t offset){  //store to zero page (index supplied by instruction)+offset
+    M->write(M->read(++PC)+offset,value);
+}
+
+void M6502_core::store_abs(uint8_t value){                  //store to absolute address supplied by instruction
+    M->write(M->readWord(++PC), value);
+    PC++;
+}
+
+void M6502_core::store_abs(uint8_t value, uint8_t offset){  //store to absolute (address supplied by instruction)+offset
+    M->write(M->readWord(++PC)+offset, value);
+    PC++;
+}
+
+void M6502_core::store_ind_x(uint8_t value){                //store to address at (instruction argument + x)
+    M->write(M->readWord(M->read(++PC)+X),value);
+}
+
+void M6502_core::store_ind_y(uint8_t value){                //store to (address at instruction argument) + y
+    M->write(M->readWord(M->read(++PC))+Y,value);
+}
 /*------------------------------------------------------------------------------------------------*/
 
 void M6502_core::execute(uint8_t val){
@@ -412,18 +437,22 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::STA_x_ind:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            store_ind_x(A);
             break;
 
         case instruct::STY_zpg:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            store_zpg(Y);
             break;
 
         case instruct::STA_zpg:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            store_zpg(A);
             break;
 
         case instruct::STX_zpg:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            store_zpg(X);
             break;
 
         case instruct::DEY_impl:
@@ -436,14 +465,17 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::STY_abs:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            store_abs(Y);
             break;
 
         case instruct::STA_abs:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            store_abs(A);
             break;
 
         case instruct::STX_abs:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            store_zpg(X);
             break;
 
         case instruct::BCC_rel:
@@ -455,18 +487,22 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::STA_ind_y:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            store_ind_y(A);
             break;
 
         case instruct::STY_zpg_x:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            store_zpg_x(Y);
             break;
 
         case instruct::STA_zpg_x:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            store_zpg(A,X);
             break;
 
         case instruct::STX_zpg_y:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            store_zpg_y(X);
             break;
 
         case instruct::TYA_impl:
@@ -475,6 +511,7 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::STA_abs_y:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            store_abs(A,Y);
             break;
 
         case instruct::TXS_impl:
@@ -483,6 +520,7 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::STA_abs_x:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            store_abs(A,X);
             break;
 
         case instruct::LDY_n:
