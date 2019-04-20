@@ -646,16 +646,19 @@ void M6502_core::execute(uint8_t val){
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             break;
 
-        case instruct::CMP_x_ind:
+        case instruct::CMP_x_ind:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            if((A-(M->read(PC+1)) < 0)){
-                SR.S = M->read(PC+1) >> 7;
+            uint8_t tmp = A - (read_ind_x());
+            if(tmp < 0){
+                SR.S = tmp >> 7;
             }
-            if((A-(M->read(PC+1)) == 0)){
+            if(tmp == 0){
                 SR.Z = 1;
-            }
-            if((A-(M->read(PC+1)) >= 0)){
                 SR.C = 1;
+            }
+            if(tmp >= 0){
+                SR.C = 1;
+            }
             }
             break;
 
@@ -663,8 +666,20 @@ void M6502_core::execute(uint8_t val){
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             break;
 
-        case instruct::CMP_zpg:
+        case instruct::CMP_zpg:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint8_t tmp = A - (read_zpg());
+            if(tmp < 0){
+                SR.S = tmp >> 7;
+            }
+            if(tmp == 0){
+                SR.Z = 1;
+                SR.C = 1;
+            }
+            if(tmp >= 0){
+                SR.C = 1;
+            }
+            }
             break;
 
         case instruct::DEC_zpg:
@@ -675,8 +690,20 @@ void M6502_core::execute(uint8_t val){
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             break;
 
-        case instruct::CMP_n:
+        case instruct::CMP_n:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint8_t tmp = A - (M->read(++PC));
+            if(tmp < 0){
+                SR.S = tmp >> 7;
+            }
+            if(tmp == 0){
+                SR.Z = 1;
+                SR.C = 1;
+            }
+            if(tmp >= 0){
+                SR.C = 1;
+            }
+            }
             break;
 
         case instruct::DEX_impl:
@@ -687,8 +714,20 @@ void M6502_core::execute(uint8_t val){
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             break;
 
-        case instruct::CMP_abs:
+        case instruct::CMP_abs:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint8_t tmp = A - (read_abs());
+            if(tmp < 0){
+                SR.S = tmp >> 7;
+            }
+            if(tmp == 0){
+                SR.Z = 1;
+                SR.C = 1;
+            }
+            if(tmp >= 0){
+                SR.C = 1;
+            }
+            }
             break;
 
         case instruct::DEC_abs:
@@ -702,12 +741,36 @@ void M6502_core::execute(uint8_t val){
             }
             break;
 
-        case instruct::CMP_ind_y:
+        case instruct::CMP_ind_y:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint8_t tmp = A - (read_ind_y());
+            if(tmp < 0){
+                SR.S = tmp >> 7;
+            }
+            if(tmp == 0){
+                SR.Z = 1;
+                SR.C = 1;
+            }
+            if(tmp >= 0){
+                SR.C = 1;
+            }
+            }
             break;
 
-        case instruct::CMP_zpg_x:
+        case instruct::CMP_zpg_x:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint8_t tmp = A - (read_zpg(X));
+            if(tmp < 0){
+                SR.S = tmp >> 7;
+            }
+            if(tmp == 0){
+                SR.Z = 1;
+                SR.C = 1;
+            }
+            if(tmp >= 0){
+                SR.C = 1;
+            }
+            }
             break;
 
         case instruct::DEC_zpg_x:
@@ -719,12 +782,36 @@ void M6502_core::execute(uint8_t val){
             SR.D = 0;
             break;
 
-        case instruct::CMP_abs_y:
+        case instruct::CMP_abs_y:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint8_t tmp = A - (read_abs(Y));
+            if(tmp < 0){
+                SR.S = tmp >> 7;
+            }
+            if(tmp == 0){
+                SR.Z = 1;
+                SR.C = 1;
+            }
+            if(tmp >= 0){
+                SR.C = 1;
+            }
+            }
             break;
 
-        case instruct::CMP_abs_x:
+        case instruct::CMP_abs_x:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint8_t tmp = A - (read_abs(X));
+            if(tmp < 0){
+                SR.S = tmp >> 7;
+            }
+            if(tmp == 0){
+                SR.Z = 1;
+                SR.C = 1;
+            }
+            if(tmp >= 0){
+                SR.C = 1;
+            }
+            }
             break;
 
         case instruct::DEC_abs_x:
@@ -741,7 +828,7 @@ void M6502_core::execute(uint8_t val){
             uint8_t checkV;
             temp = read_ind_x();
             checkV = (A>>7 & temp>>7);
-            A = A-temp-SR.C;
+            A = A-temp-!SR.C;
             SR.Z = A;
             SR.S = A>>7;
             if(checkV){
@@ -761,7 +848,7 @@ void M6502_core::execute(uint8_t val){
             uint8_t checkV;
             temp = read_zpg();
             checkV = (A>>7 & temp>>7);
-            A = A-temp-SR.C;
+            A = A-temp-!SR.C;
             SR.Z = A;
             SR.S = A>>7;
             if(checkV){
@@ -784,7 +871,7 @@ void M6502_core::execute(uint8_t val){
             uint8_t checkV;
             temp = M->read(++PC);
             checkV = (A>>7 & temp>>7);
-            A = A-temp-SR.C;
+            A = A-temp-!SR.C;
             SR.Z = A;
             SR.S = A>>7;
             if(checkV){
@@ -808,7 +895,7 @@ void M6502_core::execute(uint8_t val){
             uint8_t checkV;
             temp = read_abs();
             checkV = (A>>7 & temp>>7);
-            A = A-temp-SR.C;
+            A = A-temp-!SR.C;
             SR.Z = A;
             SR.S = A>>7;
             if(checkV){
@@ -834,7 +921,7 @@ void M6502_core::execute(uint8_t val){
            uint8_t checkV;
            temp = read_ind_y();
            checkV = (A>>7 & temp>>7);
-           A = A-temp-SR.C;
+           A = A-temp-!SR.C;
            SR.Z = A;
            SR.S = A>>7;
            if(checkV){
@@ -849,7 +936,7 @@ void M6502_core::execute(uint8_t val){
           uint8_t checkV;
           temp = read_zpg(X);
           checkV = (A>>7 & temp>>7);
-          A = A-temp-SR.C;
+          A = A-temp-!SR.C;
           SR.Z = A;
           SR.S = A>>7;
           if(checkV){
@@ -874,7 +961,7 @@ void M6502_core::execute(uint8_t val){
             uint8_t checkV;
             temp = read_zpg(++PC);
             checkV = (A>>7 & temp>>7);
-            A = A-temp-SR.C;
+            A = A-temp-!SR.C;
             SR.Z = A;
             SR.S = A>>7;
             if(checkV){
@@ -889,7 +976,7 @@ void M6502_core::execute(uint8_t val){
            uint8_t checkV;
            temp = read_abs(X);
            checkV = (A>>7 & temp>>7);
-           A = A-temp-SR.C;
+           A = A-temp-!SR.C;
            SR.Z = A;
            SR.S = A>>7;
            if(checkV){
