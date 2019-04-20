@@ -53,6 +53,8 @@ void M6502_core::execute(uint8_t val){
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             nmi();
             SR.B = 1;
+            stack_push(read_SR());
+            stack_push(PC+2);
             break;
             
         case instruct::ORA_x_ind:
@@ -102,6 +104,9 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::BPL_rel:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            if(SR.S == 0){
+                PC = (read_rel() + PC);
+            }
             break;
 
         case instruct::ORA_ind_y:
@@ -125,6 +130,7 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::CLC_impl:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            SR.C = 0;
             break;
 
         case instruct::ORA_abs_y:
@@ -161,6 +167,9 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::BIT_zpg:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            SR.S = read_zpg(PC+1) >> 7;
+            SR.V = read_zpg(PC+1) >> 6;
+            SR.Z = A & read_zpg(PC+1);
             break;
 
         case instruct::NAD_zpg:
@@ -190,13 +199,16 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::BIT_abs:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            SR.S = read_abs(PC+1) >> 7;
+            SR.V = read_abs(PC+1) >> 6;
+            SR.Z = A & read_abs(PC+1);
             break;
 
         case instruct::AND_abs:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            A = (read_zpg(PC+1) & A);
+            A = (read_abs(PC+1) & A);
             SR.S = (A>>7);
-            if((read_zpg(PC+1) & A)== 0){
+            if((read_abs(PC+1) & A)== 0){
                 SR.Z = 1;
             }
             break;
@@ -207,6 +219,9 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::BMI_rel:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            if(SR.S == 1){
+                PC = (read_rel() + PC);
+            }
             break;
 
         case instruct::AND_ind_y:
@@ -237,18 +252,18 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::AND_abs_y:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            A =((PC+1) &  Y);
+            A =(read_abs(PC+1) &  Y);
             SR.S = (A>>7);
-            if(((PC+1) &  Y)== 0){
+            if((read_abs(PC+1) &  Y)== 0){
                 SR.Z = 1;
             }
             break;
 
         case instruct::AND_abs_x:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            A = ((PC+1) & X);
+            A = (read_abs(PC+1) & X);
             SR.S = (A>>7);
-            if(((PC+1) & X)== 0){
+            if((read_abs(PC+1) & X)== 0){
                 SR.Z = 1;
             }
             break;
@@ -299,6 +314,9 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::BVC_rel:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            if(SR.V == 0){
+                PC = (read_rel() + PC );
+            }
             break;
 
         case instruct::EOR_ind_y:
@@ -315,6 +333,7 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::CLI_impl:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            SR.I = 0;
             break;
 
         case instruct::EOR_abs_y:
@@ -372,6 +391,9 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::BVS_rel:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            if(SR.V == 1){
+                PC = (read_rel() + PC);
+            }
             break;
 
         case instruct::ADC_ind_y:
@@ -440,6 +462,9 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::BCC_rel:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            if(SR.C == 1){
+                PC = (read_rel() + PC);
+            }
             break;
 
         case instruct::STA_ind_y:
@@ -516,6 +541,9 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::BCS_rel:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            if(SR.C == 1){
+                PC = (read_rel() + PC);
+            }
             break;
 
         case instruct::LDA_ind_y:
@@ -536,6 +564,7 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::CLV_impl:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            SR.V = 0;
             break;
 
         case instruct::LDA_abs_y:
@@ -604,6 +633,9 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::BNE_rel:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            if(SR.Z == 0){
+                PC = (read_rel() + PC);
+            }
             break;
 
         case instruct::CMP_ind_y:
@@ -620,6 +652,7 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::CLD_impl:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            SR.D = 0;
             break;
 
         case instruct::CMP_abs_y:
@@ -680,6 +713,9 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::BEQ_rel:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            if(SR.Z == 1){
+                PC = (read_rel() + PC);
+            }
             break;
 
         case instruct::SBC_ind_y:
