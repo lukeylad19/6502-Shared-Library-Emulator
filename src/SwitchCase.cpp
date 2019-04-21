@@ -207,7 +207,7 @@ void M6502_core::execute(uint8_t val){
             uint8_t tmp = read_zpg();
             SR.C = tmp >> 7;
             A = tmp << 1;
-            if(SR.C){ A+0x01;}
+            if(SR.C){ A = A+0x01;}
             if(A == 0){
                 SR.Z = 1;
             }
@@ -232,7 +232,7 @@ void M6502_core::execute(uint8_t val){
             uint8_t tmp = A;
             SR.C = tmp >> 7;
             A = tmp << 1;
-            if(SR.C){ A+0x01;}
+            if(SR.C){ A = A+0x01;}
             if(A == 0){
                 SR.Z = 1;
             }
@@ -259,7 +259,7 @@ void M6502_core::execute(uint8_t val){
             uint8_t tmp = read_abs();
             SR.C = tmp >> 7;
             A = tmp << 1;
-            if(SR.C){ A+0x01;}
+            if(SR.C){ A = A+0x01;}
             if(A == 0){
                 SR.Z = 1;
             }
@@ -293,7 +293,7 @@ void M6502_core::execute(uint8_t val){
             uint8_t tmp = read_zpg(X);
             SR.C = tmp >> 7;
             A = tmp << 1;
-            if(SR.C){ A+0x01;}
+            if(SR.C){ A = A+0x01;}
             if(A == 0){
                 SR.Z = 1;
             }
@@ -326,7 +326,7 @@ void M6502_core::execute(uint8_t val){
             uint8_t tmp = read_abs(X);
             SR.C = tmp >> 7;
             A = tmp << 1;
-            if(SR.C){ A+0x01;}
+            if(SR.C){ A = A+0x01;}
             if(A == 0){
                 SR.Z = 1;
             }
@@ -533,7 +533,7 @@ void M6502_core::execute(uint8_t val){
             uint8_t tmp = read_zpg();
             SR.C = tmp >> 7;
             A = tmp >> 1;
-            if(SR.C){ A+0x80;}
+            if(SR.C){ A = A+0x80;}
             if(A == 0){
                 SR.Z = 1;
             }
@@ -566,7 +566,7 @@ void M6502_core::execute(uint8_t val){
             uint8_t tmp = A;
             SR.C = tmp >> 7;
             A = tmp >> 1;
-            if(SR.C){ A+0x80;}
+            if(SR.C){ A = A+0x80;}
             if(A == 0){
                 SR.Z = 1;
             }
@@ -599,7 +599,7 @@ void M6502_core::execute(uint8_t val){
             uint8_t tmp = read_abs();
             SR.C = tmp >> 7;
             A = tmp >> 1;
-            if(SR.C){ A+0x80;}
+            if(SR.C){ A = A+0x80;}
             if(A == 0){
                 SR.Z = 1;
             }
@@ -649,7 +649,7 @@ void M6502_core::execute(uint8_t val){
             uint8_t tmp = read_zpg(X);
             SR.C = tmp >> 7;
             A = tmp >> 1;
-            if(SR.C){ A+0x80;}
+            if(SR.C){ A = A+0x80;}
             if(A == 0){
                 SR.Z = 1;
             }
@@ -698,7 +698,7 @@ void M6502_core::execute(uint8_t val){
             uint8_t tmp = read_abs(X);
             SR.C = tmp >> 7;
             A = tmp >> 1;
-            if(SR.C){ A+0x80;}
+            if(SR.C){ A = A+0x80;}
             if(A == 0){
                 SR.Z = 1;
             }
