@@ -291,10 +291,20 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::EOR_x_ind:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            A = A ^ read_ind_x();
+            if(A == 0){
+                SR.Z = 0;
+            }
+            SR.S = A >>7;
             break;
 
         case instruct::EOR_zpg:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            A = A ^ read_zpg();
+            if(A == 0){
+                SR.Z = 0;
+            }
+            SR.S = A >>7;
             break;
 
         case instruct::LSR_zpg:
@@ -307,6 +317,11 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::EOR_n:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            A = A ^ (M->read(++PC));
+            if(A == 0){
+                SR.Z = 0;
+            }
+            SR.S = A >>7;
             break;
 
         case instruct::LAS_a:
@@ -319,6 +334,11 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::EOR_abs:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            A = A ^ read_abs();
+            if(A == 0){
+                SR.Z = 0;
+            }
+            SR.S = A >>7;
             break;
 
         case instruct::LSR_abs:
@@ -334,10 +354,20 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::EOR_ind_y:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            A = A ^ read_ind_y();
+            if(A == 0){
+                SR.Z = 0;
+            }
+            SR.S = A >>7;
             break;
 
         case instruct::EOR_zpg_x:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            A = A ^ read_zpg(X);
+            if(A == 0){
+                SR.Z = 0;
+            }
+            SR.S = A >>7;
             break;
 
         case instruct::LSR_zpg_x:
@@ -351,10 +381,20 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::EOR_abs_y:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            A = A ^ read_abs(Y);
+            if(A == 0){
+                SR.Z = 0;
+            }
+            SR.S = A >>7;
             break;
 
         case instruct::EOR_abs_x:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            A = A ^ read_abs(X);
+            if(A == 0){
+                SR.Z = 0;
+            }
+            SR.S = A >>7;
             break;
 
         case instruct::LSR_abs_x:
