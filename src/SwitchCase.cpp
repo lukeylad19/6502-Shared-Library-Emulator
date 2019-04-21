@@ -209,8 +209,9 @@ void M6502_core::execute(uint8_t val){
             A = tmp << 1;
             if(SR.C){ A+0x01;}
             if(A == 0){
-                SR.S = 1;
+                SR.Z = 1;
             }
+            SR.S = A >>7;
         }   
             break;
 
@@ -233,8 +234,9 @@ void M6502_core::execute(uint8_t val){
             A = tmp << 1;
             if(SR.C){ A+0x01;}
             if(A == 0){
-                SR.S = 1;
+                SR.Z = 1;
             }
+            SR.S = A >>7;
         }  
             break;
 
@@ -259,8 +261,9 @@ void M6502_core::execute(uint8_t val){
             A = tmp << 1;
             if(SR.C){ A+0x01;}
             if(A == 0){
-                SR.S = 1;
+                SR.Z = 1;
             }
+            SR.S = A >>7;
         }  
             break;
 
@@ -292,8 +295,9 @@ void M6502_core::execute(uint8_t val){
             A = tmp << 1;
             if(SR.C){ A+0x01;}
             if(A == 0){
-                SR.S = 1;
+                SR.Z = 1;
             }
+            SR.S = A >>7;
         }  
             break;
 
@@ -324,13 +328,16 @@ void M6502_core::execute(uint8_t val){
             A = tmp << 1;
             if(SR.C){ A+0x01;}
             if(A == 0){
-                SR.S = 1;
+                SR.Z = 1;
             }
-        }  ;
+            SR.S = A >>7;
+        }  
             break;
 
         case instruct::RTI_impl:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            write_SR(stack_pop());
+            PC = stack_pop();
             break;
 
         case instruct::EOR_x_ind:
@@ -485,6 +492,7 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::RTS_impl:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            PC = stack_pop();
             break;
 
         case instruct::ADC_x_ind:{
@@ -527,8 +535,9 @@ void M6502_core::execute(uint8_t val){
             A = tmp >> 1;
             if(SR.C){ A+0x80;}
             if(A == 0){
-                SR.S = 1;
+                SR.Z = 1;
             }
+            SR.S = A >>7;
         }  
             break;
 
@@ -559,8 +568,9 @@ void M6502_core::execute(uint8_t val){
             A = tmp >> 1;
             if(SR.C){ A+0x80;}
             if(A == 0){
-                SR.S = 1;
+                SR.Z = 1;
             }
+            SR.S = A >>7;
         }  
             break;
 
@@ -591,8 +601,9 @@ void M6502_core::execute(uint8_t val){
             A = tmp >> 1;
             if(SR.C){ A+0x80;}
             if(A == 0){
-                SR.S = 1;
+                SR.Z = 1;
             }
+            SR.S = A >>7;
         }  
             break;
 
@@ -640,8 +651,9 @@ void M6502_core::execute(uint8_t val){
             A = tmp >> 1;
             if(SR.C){ A+0x80;}
             if(A == 0){
-                SR.S = 1;
+                SR.Z = 1;
             }
+            SR.S = A >>7;
         }  
             break;
 
@@ -688,8 +700,9 @@ void M6502_core::execute(uint8_t val){
             A = tmp >> 1;
             if(SR.C){ A+0x80;}
             if(A == 0){
-                SR.S = 1;
+                SR.Z = 1;
             }
+            SR.S = A >>7;
         }  
             break;
 
