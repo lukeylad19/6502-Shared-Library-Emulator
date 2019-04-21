@@ -459,8 +459,13 @@ void M6502_core::execute(uint8_t val){
             store_zpg(X);
             break;
 
-        case instruct::DEY_impl:
+        case instruct::DEY_impl:            
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            Y = Y-1;
+            if(Y == 0){
+                SR.Z = 1;
+            }
+            SR.S = Y>>7;
             break;
 
         case instruct::TXA_impl:
@@ -706,12 +711,20 @@ void M6502_core::execute(uint8_t val){
             }
             break;
 
-        case instruct::DEC_zpg:
+        case instruct::DEC_zpg:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint8_t tmp = M->read(++PC); //read address needed
+            M->write(0x0000+tmp,M->read(tmp)-1);//store address value-1 in zeropage
+            if((M->read(tmp)) == 0){
+                SR.Z = 1;
+            }
+            SR.S = (M->read(tmp))>>7;
+            }
             break;
 
         case instruct::INY_impl:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            Y = Y+1;
             break;
 
         case instruct::CMP_n:{
@@ -732,6 +745,11 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::DEX_impl:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            X = X-1;
+            if(X == 0){
+                SR.Z = 1;
+            }
+            SR.S = X>>7;
             break;
 
         case instruct::CPY_abs:{
@@ -766,8 +784,15 @@ void M6502_core::execute(uint8_t val){
             }
             break;
 
-        case instruct::DEC_abs:
+        case instruct::DEC_abs:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint16_t tmp = M->readWord(++PC); //read address needed
+            M->write(tmp, M->read(tmp)-1);
+            if((M->read(tmp)) == 0){
+                SR.Z = 1;
+            }
+            SR.S = (M->read(tmp))>>7;
+            }
             break;
 
         case instruct::BNE_rel:
@@ -809,8 +834,15 @@ void M6502_core::execute(uint8_t val){
             }
             break;
 
-        case instruct::DEC_zpg_x:
+        case instruct::DEC_zpg_x:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint8_t tmp = M->read(++PC)+X; //read address needed
+            M->write(0x0000+tmp,M->read(tmp)-1);//store address value-1 in zeropage
+            if((M->read(tmp)) == 0){
+                SR.Z = 1;
+            }
+            SR.S = (M->read(tmp))>>7;
+            }
             break;
 
         case instruct::CLD_impl:
@@ -850,8 +882,15 @@ void M6502_core::execute(uint8_t val){
             }
             break;
 
-        case instruct::DEC_abs_x:
+        case instruct::DEC_abs_x:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint16_t tmp = M->readWord(++PC)+X; //read address needed
+            M->write(tmp, M->read(tmp)-1);
+            if((M->read(tmp)) == 0){
+                SR.Z = 1;
+            }
+            SR.S = (M->read(tmp))>>7;
+            }
             break;
 
         case instruct::CPX_n:{
@@ -917,12 +956,20 @@ void M6502_core::execute(uint8_t val){
             break;
           }
 
-        case instruct::INC_zpg:
+        case instruct::INC_zpg:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint8_t tmp = M->read(++PC); //read address needed
+            M->write(0x0000+tmp,M->read(tmp)+1);//store address value-1 in zeropage
+            if((M->read(tmp)) == 0){
+                SR.Z = 1;
+            }
+            SR.S = (M->read(tmp))>>7;
+            }
             break;
 
         case instruct::INX_impl:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            X = X+1;
             break;
 
         case instruct::SBC_n:{
@@ -976,8 +1023,15 @@ void M6502_core::execute(uint8_t val){
             break;
           }
 
-        case instruct::INC_abs:
+        case instruct::INC_abs:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint16_t tmp = M->readWord(++PC); //read address needed
+            M->write(tmp, M->read(tmp)+1);
+            if((M->read(tmp)) == 0){
+                SR.Z = 1;
+            }
+            SR.S = (M->read(tmp))>>7;
+            }
             break;
 
         case instruct::BEQ_rel:
@@ -1017,8 +1071,15 @@ void M6502_core::execute(uint8_t val){
          break;
        }
 
-        case instruct::INC_zpg_x:
+        case instruct::INC_zpg_x:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint8_t tmp = M->read(++PC)+X; //read address needed
+            M->write(0x0000+tmp,M->read(tmp)+1);//store address value-1 in zeropage
+            if((M->read(tmp)) == 0){
+                SR.Z = 1;
+            }
+            SR.S = (M->read(tmp))>>7;
+            }
             break;
 
         case instruct::SED_impl:
@@ -1057,8 +1118,15 @@ void M6502_core::execute(uint8_t val){
            break;
          }
 
-        case instruct::INC_abs_x:
+        case instruct::INC_abs_x:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint16_t tmp = M->readWord(++PC)+X; //read address needed
+            M->write(tmp, M->read(tmp)+1);
+            if((M->read(tmp)) == 0){
+                SR.Z = 1;
+            }
+            SR.S = (M->read(tmp))>>7;
+            }
             break;
 
         case instruct::EXT:
