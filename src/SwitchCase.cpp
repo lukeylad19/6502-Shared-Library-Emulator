@@ -202,8 +202,16 @@ void M6502_core::execute(uint8_t val){
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             break;
 
-        case instruct::ROL_apg:
+        case instruct::ROL_zpg:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint8_t tmp = read_zpg();
+            SR.C = tmp >> 7;
+ 
+            A = tmp << 1;
+            if(A == 0){
+                SR.S = 1;
+            }
+        }   
             break;
 
         case instruct::PLP_impl:
@@ -311,12 +319,20 @@ void M6502_core::execute(uint8_t val){
             SR.S = A >>7;
             break;
 
-        case instruct::LSR_zpg:
+        case instruct::LSR_zpg:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint8_t tmp = read_zpg();
+            SR.C = tmp&0x01;
+            A = tmp >>1;
+            if(A == 0){
+                SR.S = 1;
+            }
+        }   
             break;
 
         case instruct::PHA_impl:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            stack_push(A);
             break;
 
         case instruct::EOR_n:
@@ -328,8 +344,15 @@ void M6502_core::execute(uint8_t val){
             SR.S = A >>7;
             break;
 
-        case instruct::LAS_a:
+        case instruct::LSR_a:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint8_t tmp = A;
+            SR.C = tmp&0x01;
+            A = tmp >>1;
+            if(A == 0){
+                SR.S = 1;
+            }
+        }   
             break;
 
         case instruct::JMP_abs:
@@ -347,8 +370,15 @@ void M6502_core::execute(uint8_t val){
             SR.S = A >>7;
             break;
 
-        case instruct::LSR_abs:
+        case instruct::LSR_abs:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint8_t tmp = read_abs();
+            SR.C = tmp&0x01;
+            A = tmp >>1;
+            if(A == 0){
+                SR.S = 1;
+            }
+        }            
             break;
 
         case instruct::BVC_rel:
@@ -376,8 +406,15 @@ void M6502_core::execute(uint8_t val){
             SR.S = A >>7;
             break;
 
-        case instruct::LSR_zpg_x:
+        case instruct::LSR_zpg_x:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint8_t tmp = read_zpg(X);
+            SR.C = tmp&0x01;
+            A = tmp >>1;
+            if(A == 0){
+                SR.S = 1;
+            }
+        }   
             break;
 
         case instruct::CLI_impl:
@@ -403,8 +440,15 @@ void M6502_core::execute(uint8_t val){
             SR.S = A >>7;
             break;
 
-        case instruct::LSR_abs_x:
+        case instruct::LSR_abs_x:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint8_t tmp = read_abs(X);
+            SR.C = tmp&0x01;
+            A = tmp >>1;
+            if(A == 0){
+                SR.S = 1;
+            }
+        }   
             break;
 
         case instruct::RTS_impl:
@@ -450,6 +494,7 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::PLA_impl:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+             A = stack_pop();
             break;
 
         case instruct::ADC_n:{
