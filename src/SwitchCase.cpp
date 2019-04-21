@@ -974,7 +974,7 @@ void M6502_core::execute(uint8_t val){
         case instruct::INX_impl:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             X = X+1;            
-            if(YX == 0){
+            if(X == 0){
                 SR.Z = 1;
             }
             SR.S = X>>7;
