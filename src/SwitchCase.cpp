@@ -206,8 +206,8 @@ void M6502_core::execute(uint8_t val){
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             uint8_t tmp = read_zpg();
             SR.C = tmp >> 7;
- 
             A = tmp << 1;
+            if(SR.C){ A+0x01;}
             if(A == 0){
                 SR.S = 1;
             }
@@ -226,8 +226,16 @@ void M6502_core::execute(uint8_t val){
             SR.Z = A;
             break;
 
-        case instruct::ROL_a:
+        case instruct::ROL_a:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint8_t tmp = A;
+            SR.C = tmp >> 7;
+            A = tmp << 1;
+            if(SR.C){ A+0x01;}
+            if(A == 0){
+                SR.S = 1;
+            }
+        }  
             break;
 
         case instruct::BIT_abs:
@@ -244,8 +252,16 @@ void M6502_core::execute(uint8_t val){
             SR.Z = A;
             break;
 
-        case instruct::ROL_abs:
+        case instruct::ROL_abs:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint8_t tmp = read_abs();
+            SR.C = tmp >> 7;
+            A = tmp << 1;
+            if(SR.C){ A+0x01;}
+            if(A == 0){
+                SR.S = 1;
+            }
+        }  
             break;
 
         case instruct::BMI_rel:
@@ -269,8 +285,16 @@ void M6502_core::execute(uint8_t val){
             SR.Z = A;
             break;
 
-        case instruct::ROL_zpg_x:
+        case instruct::ROL_zpg_x:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint8_t tmp = read_zpg(X);
+            SR.C = tmp >> 7;
+            A = tmp << 1;
+            if(SR.C){ A+0x01;}
+            if(A == 0){
+                SR.S = 1;
+            }
+        }  
             break;
 
         case instruct::SEC_impl:
@@ -293,8 +317,16 @@ void M6502_core::execute(uint8_t val){
             SR.Z = A;
             break;
 
-        case instruct::ROL_abs_x:
+        case instruct::ROL_abs_x:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint8_t tmp = read_abs(X);
+            SR.C = tmp >> 7;
+            A = tmp << 1;
+            if(SR.C){ A+0x01;}
+            if(A == 0){
+                SR.S = 1;
+            }
+        }  ;
             break;
 
         case instruct::RTI_impl:
@@ -488,8 +520,16 @@ void M6502_core::execute(uint8_t val){
             break;
 
 
-        case instruct::ROR_zpg:
+        case instruct::ROR_zpg:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint8_t tmp = read_zpg();
+            SR.C = tmp >> 7;
+            A = tmp >> 1;
+            if(SR.C){ A+0x80;}
+            if(A == 0){
+                SR.S = 1;
+            }
+        }  
             break;
 
         case instruct::PLA_impl:
@@ -512,8 +552,16 @@ void M6502_core::execute(uint8_t val){
         }
             break;
 
-        case instruct::ROR_a:
+        case instruct::ROR_a:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint8_t tmp = A;
+            SR.C = tmp >> 7;
+            A = tmp >> 1;
+            if(SR.C){ A+0x80;}
+            if(A == 0){
+                SR.S = 1;
+            }
+        }  
             break;
 
         case instruct::JMP_ind:
@@ -536,8 +584,16 @@ void M6502_core::execute(uint8_t val){
         }
             break;
 
-        case instruct::ROR_abs:
+        case instruct::ROR_abs:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint8_t tmp = read_abs();
+            SR.C = tmp >> 7;
+            A = tmp >> 1;
+            if(SR.C){ A+0x80;}
+            if(A == 0){
+                SR.S = 1;
+            }
+        }  
             break;
 
         case instruct::BVS_rel:
@@ -577,8 +633,16 @@ void M6502_core::execute(uint8_t val){
         }
             break;
 
-        case instruct::ROR_zpg_x:
+        case instruct::ROR_zpg_x:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint8_t tmp = read_zpg(X);
+            SR.C = tmp >> 7;
+            A = tmp >> 1;
+            if(SR.C){ A+0x80;}
+            if(A == 0){
+                SR.S = 1;
+            }
+        }  
             break;
 
         case instruct::SEI_impl:
@@ -617,8 +681,16 @@ void M6502_core::execute(uint8_t val){
         }
             break;
 
-        case instruct::ROR_abs_x:
+        case instruct::ROR_abs_x:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            uint8_t tmp = read_abs(X);
+            SR.C = tmp >> 7;
+            A = tmp >> 1;
+            if(SR.C){ A+0x80;}
+            if(A == 0){
+                SR.S = 1;
+            }
+        }  
             break;
 
         case instruct::STA_x_ind:
