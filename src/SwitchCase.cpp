@@ -179,6 +179,9 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::JSR_abs:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            stack_push(PC+2);
+            PC = M->readWord(PC++);
+            PC = PC+1;
             break;
 
         case instruct::AND_x_ind:
@@ -205,6 +208,7 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::PLP_impl:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            write_SR(stack_pop());
             break;
 
         case instruct::AND_n:
@@ -330,6 +334,8 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::JMP_abs:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            PC = M->readWord(++PC);
+            PC = PC+1;
             break;
 
         case instruct::EOR_abs:
@@ -432,6 +438,7 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::JMP_ind:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            PC = read_ind();
             break;
 
         case instruct::ADC_abs:
@@ -588,26 +595,56 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::LDY_n:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            Y = M->read(++PC);
+            if(Y == 0){
+                SR.Z = 1;
+            }
+            SR.S = Y >> 7;
             break;
 
         case instruct::LDA_x_ind:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            A = read_ind_x();
+            if(A == 0){
+                SR.Z = 1;
+            }
+            SR.S = A >> 7;
             break;
 
         case instruct::LDX_n:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            X = M->read(++PC);
+            if(X == 0){
+                SR.Z = 1;
+            }
+            SR.S = X >> 7;
             break;
 
         case instruct::LDY_zpg:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            Y = read_zpg();
+            if(Y == 0){
+                SR.Z = 1;
+            }
+            SR.S = Y >> 7;
             break;
 
         case instruct::LDA_zpg:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            A = read_zpg();
+            if(A == 0){
+                SR.Z = 1;
+            }
+            SR.S = A >> 7;
             break;
 
         case instruct::LDX_zpg:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            X = read_zpg();
+            if(X == 0){
+                SR.Z = 1;
+            }
+            SR.S = X >> 7;
             break;
 
         case instruct::TAY_impl:
@@ -616,6 +653,11 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::LDA_n:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            A = M->read(++PC);
+            if(A == 0){
+                SR.Z = 1;
+            }
+            SR.S = A >> 7;
             break;
 
         case instruct::TAX_impl:
@@ -628,8 +670,31 @@ void M6502_core::execute(uint8_t val){
             SR.S = X>>7;
             break;
 
+        case instruct::LDY_abs:
+            std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            Y = read_abs();
+            if(Y == 0){
+                SR.Z = 1;
+            }
+            SR.S = Y >> 7;
+            break;
+
         case instruct::LDA_abs:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            A = read_abs();
+            if(A == 0){
+                SR.Z = 1;
+            }
+            SR.S = A >> 7;
+            break;
+
+        case instruct::LDX_abs:
+            std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            X = read_abs();
+            if(X == 0){
+                SR.Z = 1;
+            }
+            SR.S = X >> 7;
             break;
 
         case instruct::BCS_rel:
@@ -641,18 +706,38 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::LDA_ind_y:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            A = read_ind_y();
+            if(A == 0){
+                SR.Z = 1;
+            }
+            SR.S = A >> 7;
             break;
 
         case instruct::LDY_zpg_x:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            Y = read_zpg(X);
+            if(Y == 0){
+                SR.Z = 1;
+            }
+            SR.S = Y >> 7;
             break;
 
         case instruct::LDA_zpg_x:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            A = read_zpg(X);
+            if(A == 0){
+                SR.Z = 1;
+            }
+            SR.S = A >> 7;
             break;
 
         case instruct::LDX_zpg_y:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            X = read_zpg(Y);
+            if(X == 0){
+                SR.Z = 1;
+            }
+            SR.S = X >> 7;
             break;
 
         case instruct::CLV_impl:
@@ -662,6 +747,11 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::LDA_abs_y:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            A = read_abs(Y);
+            if(A == 0){
+                SR.Z = 1;
+            }
+            SR.S = A >> 7;
             break;
 
         case instruct::TSX_impl:
@@ -677,14 +767,30 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::LDY_abs_x:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            Y = read_abs(X);
+            if(Y == 0){
+                SR.Z = 1;
+            }
+            SR.S = Y >> 7;
             break;
 
         case instruct::LDA_abs_x:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            A = read_abs(X);
+            if(A == 0){
+                SR.Z = 1;
+            }
+            SR.S = A >> 7;
             break;
 
         case instruct::LDX_abs_y:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            X = read_abs(Y);
+            if(X == 0){
+                SR.Z = 1;
+            }
+            SR.S = X >> 7;
+
             break;
 
         case instruct::CPY_n:{
