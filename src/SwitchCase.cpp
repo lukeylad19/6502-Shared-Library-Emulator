@@ -725,6 +725,10 @@ void M6502_core::execute(uint8_t val){
         case instruct::INY_impl:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             Y = Y+1;
+            if(Y == 0){
+                SR.Z = 1;
+            }
+            SR.S = Y>>7;
             break;
 
         case instruct::CMP_n:{
@@ -969,7 +973,11 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::INX_impl:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            X = X+1;
+            X = X+1;            
+            if(YX == 0){
+                SR.Z = 1;
+            }
+            SR.S = X>>7;
             break;
 
         case instruct::SBC_n:{
