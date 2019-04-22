@@ -15,6 +15,7 @@ class M6502_memory {
     uint8_t read(uint16_t);         //read a byte
     uint16_t readWord(uint16_t);    //read a word 
     void write(uint16_t,uint8_t);   //write a byte 
+    void dump();                    //dump memory with cout
 };
 
 #endif

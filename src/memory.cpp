@@ -19,10 +19,16 @@ M6502_memory::M6502_memory(std::string romfile){
     }
 
     uint16_t start = (1 << 16)-size;
-    std::cout << "Memory Dump:" << std::endl;
     for(int i=0;(start+i)<(1<<16);i++){
         M[start+i] = buffer[i];
-        std::cout << std::hex << unsigned(start+i) << ": "<< unsigned(M[start+i]) << std::endl;
+    }
+
+}
+
+void M6502_memory::dump(){
+    std::cout <<"MEMORY DUMP: "<<std::endl;
+    for(int i=0; i<(1<<16);i++){
+        std::cout << std::hex << unsigned(i) << ": "<< unsigned(M[i]) << std::endl;
     }
 }
 

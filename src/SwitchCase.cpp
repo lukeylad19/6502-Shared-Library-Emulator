@@ -757,7 +757,7 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::STX_abs:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            store_zpg(X);
+            store_abs(X);
             break;
 
         case instruct::BCC_rel:

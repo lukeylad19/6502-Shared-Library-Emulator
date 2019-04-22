@@ -89,6 +89,10 @@ class M6502_core {
 
     M6502_core(M6502_memory*);
 
+    bool brk(){
+        return SR.B;
+    };                         
+
     void run();                         //fetch and execute an instruction
 
     void reset();                       //reset the CPU
