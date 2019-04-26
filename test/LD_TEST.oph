@@ -1,0 +1,75 @@
+.org $0000
+    .byte $0
+    .byte $1
+    .byte $2
+    .byte $3 
+    .byte $4 
+    .byte $5
+    .byte $6
+    .byte $7
+    .byte $8
+    .byte $9
+    .byte $A
+    .byte $B
+    .byte $C
+    .byte $D
+    .byte $E
+    .byte $F
+    .word $1000
+.advance $1000
+    .byte 69
+    .byte 96
+.advance $F000
+RESET:
+    LDA #$4     ;immediates 4
+    LDX #$5                ;5
+    LDY #$6                ;6
+    STA $0200
+    STX $0300
+    STY $0400
+    LDA $5      ;zero page ;5
+    LDX $6                 ;6
+    LDY $7                 ;7
+    STA $0201
+    STX $0301
+    STY $0401
+    LDA $0400   ;absolute  ;6
+    LDX $0200              ;4
+    LDY $0300              ;5
+    STA $0202
+    STX $0302
+    STY $0402
+    LDX #$02    ; x indexed
+    LDA $0200,x            ;6
+    LDY $0400,x            ;5
+    STA $0203
+    STY $0403
+    LDA $02,x              ;4
+    LDY $02,x              ;4
+    STA $0204
+    STY $0404
+    LDY $02     ; y indexed
+    LDX $0300,y            ;4
+    STX $0303
+    LDX $02,y              ;4
+    STX $0304
+    LDA $0200,y            ;6
+    STA $0205
+    LDA $02,y              ;4
+    STA $0206
+    LDX #$10    ;indirect
+    LDY #$01    
+    LDA ($00,x)            ;69
+    STA $0207
+    LDA ($10),y            ;96
+    STA $0208
+    BRK
+NMI:
+    NOP
+IRQ:
+    NOP
+.advance $FFFA
+.word NMI
+.word RESET
+.word IRQ
+.outfile "LD_TEST.bin"
