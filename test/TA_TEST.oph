@@ -2,8 +2,6 @@
 RESET:
     LDA #$69     ;immediates
     TAX          ;Transfer A to X
-    LDA #$69
-    LDY #$42
     TAY          ;Transfer A to Y
     STX $0200    ;Store X in memory at $200
     STY $0201    ;Store Y in memory at $201
@@ -16,10 +14,10 @@ RESET:
     TYA          ;Transfer Y to A
     STA $0203    ;Store A in memory at $203    
     
-    TXS 
-    LDX #$0
-    TSX
-    STX $0204    
+    TXS          ;Transfer X to stack pointer
+    LDX #$0      ;Load X with 0
+    TSX          ;Transfer Stack pointerto X
+    STX $0204    ;Store X in memory at $204
     
     BRK
 NMI:
