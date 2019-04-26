@@ -867,8 +867,14 @@ void M6502_core::execute(uint8_t val){
             SR.S = X >> 7;
             break;
 
-        case instruct::TAY_impl:
+        case instruct::TAY_impl:case instruct::TAY_impl:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            //Transfers the Accumulator to the Y index
+            Y = A;
+            //Sets the Zero Flag to the value if it is zero
+            SR.Z = Y;
+            //Sets the Negative/Status register to bit 7 of the value
+            SR.S = Y>>7;
             break;
 
         case instruct::LDA_n:

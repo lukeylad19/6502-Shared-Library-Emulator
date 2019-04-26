@@ -1,0 +1,33 @@
+.org $F000
+RESET:
+    LDA #$69     ;immediates
+    TAX          ;Transfer A to X
+    LDA #$69
+    LDY #$42
+    TAY          ;Transfer A to Y
+    STX $0200    ;Store X in memory at $200
+    STY $0201    ;Store Y in memory at $201
+    
+    LDA #$0      ;Load A with 0
+    TXA          ;Transfer X to A
+    STA $0202    ;Store A in memory at $202
+
+    LDA #$0      ;Load A with 0
+    TYA          ;Transfer Y to A
+    STA $0203    ;Store A in memory at $203    
+    
+    TXS 
+    LDX #$0
+    TSX
+    STX $0204    
+    
+    BRK
+NMI:
+    NOP
+IRQ:
+    NOP
+.advance $FFFA
+.word NMI
+.word RESET
+.word IRQ
+.outfile "TA_TEST.bin"
