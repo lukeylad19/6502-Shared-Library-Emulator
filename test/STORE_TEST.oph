@@ -1,0 +1,42 @@
+.org $00F0
+.word $0201
+.word $0204
+.advance $F000
+RESET:              ;STA
+    LDA #$69
+    LDX #$1
+    LDY #$2
+    STA $00         ;0000: $69
+    STA $0200       ;0200: $69
+    STA $0200,Y     ;0202: $69
+    STA ($F0),Y     ;0203: $69
+    LDA #96
+    STA $00,X       ;0001: $96
+    STA $0200,X     ;0201: $96
+    LDX #$2         
+    STA ($F0,X)     ;0204: $96
+                    ;STX
+    LDX #$69
+    LDY #$1
+    STX $02         ;0002: $69
+    STX $0205       ;0205: $69
+    LDX #$96
+    STX $02,Y       ;0003: $96
+                    ;STY
+    LDY #$69
+    LDX #$1
+    STY $04         ;0004: $69
+    LDY #$96
+    STY $04,X       ;0005: $96
+    STY $0206
+NMI:
+    NOP
+    RTI
+IRQ:
+    NOP
+    RTI
+.advance $FFFA
+.word NMI
+.word RESET
+.word IRQ
+.outfile "STORE_TEST.bin"
