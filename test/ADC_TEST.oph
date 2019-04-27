@@ -1,0 +1,23 @@
+ .org $F000
+RESET:
+    LDA #$69     ;immediates
+    ADC #$10
+    STA $0200
+    
+    LDA #$69
+    STA $00
+    ADC $00
+    STA $0201
+    
+    
+    
+    BRK
+NMI:
+    NOP
+IRQ:
+    NOP
+.advance $FFFA
+.word NMI
+.word RESET
+.word IRQ
+.outfile "ADC_TEST.bin"
