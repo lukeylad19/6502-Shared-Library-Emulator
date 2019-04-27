@@ -497,32 +497,25 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::ADC_x_ind:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            uint8_t temp;
-            uint8_t checkV;
-            temp = read_ind_x();
-            checkV = (A>>7 & temp>>7);
-            A = A+temp+SR.C;
-            SR.Z = A;
-            SR.S = A>>7;
-            if(checkV){
-             SR.V= !(temp>>7 & A>>7);
-           }
+            uint8_t m = read_ind_x();
+            unsigned int t = m + A +(SR.C ? 1 : 0);                                                 //if carry is set add 1 to result
+            SR.Z = !(t&0xFF);                                                                       //set the zero flag if the result will be zero
+            SR.S = (t&0x80);                                                                        //set the sign flag to bit 7
+            SR.V = (!((A^m)&0x80)&&((A^t)&0x80));                                                   //if the sign changes set overflow
+            SR.C = t > 0xFF;                                                                        //if result is greater than 255 set carry
+            A = t&0xFF;                                                                             //A is only 8 bits so mask the rest
         }
             break;
 
-        case instruct::ADC_zpg:
-            {
+        case instruct::ADC_zpg:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            uint8_t temp;
-            uint8_t checkV;
-            temp = read_zpg();
-            checkV = (A>>7 & temp>>7);
-            A = A+temp+SR.C;
-            SR.Z = A;
-            SR.S = A>>7;
-            if(checkV){
-             SR.V= !(temp>>7 & A>>7);
-           }
+            uint8_t m = read_zpg();
+            unsigned int t = m + A +(SR.C ? 1 : 0);                                                 //if carry is set add 1 to result
+            SR.Z = !(t&0xFF);                                                                       //set the zero flag if the result will be zero
+            SR.S = (t&0x80);                                                                        //set the sign flag to bit 7
+            SR.V = (!((A^m)&0x80)&&((A^t)&0x80));                                                   //if the sign changes set overflow
+            SR.C = t > 0xFF;                                                                        //if result is greater than 255 set carry
+            A = t&0xFF;                                                                             //A is only 8 bits so mask the rest
         }
             break;
 
@@ -547,31 +540,14 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::ADC_n:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            uint8_t temp;
-            uint8_t checkV;
-            int tmp;
-            temp = M->read(++PC);
-            checkV = (A>>7 & temp>>7);
-            A = A+temp;
-            if(SR.C){
-                A++;
-            }
-            tmp = A+temp;
-            if(SR.C){
-                tmp++;
-            }
-            if(tmp > 255){
-                SR.C = true;
-            }
-            else{
-                SR.C = false;
-            }
-            SR.Z = A;
-            SR.S = A>>7;
-            if(checkV){
-             SR.V= !(temp>>7 & A>>7);
+            uint8_t m = M->read(++PC);
+            unsigned int t = m + A +(SR.C ? 1 : 0);                                                 //if carry is set add 1 to result
+            SR.Z = !(t&0xFF);                                                                       //set the zero flag if the result will be zero
+            SR.S = (t&0x80);                                                                        //set the sign flag to bit 7
+            SR.V = (!((A^m)&0x80)&&((A^t)&0x80));                                                   //if the sign changes set overflow
+            SR.C = t > 0xFF;                                                                        //if result is greater than 255 set carry
+            A = t&0xFF;                                                                             //A is only 8 bits so mask the rest
            }
-        }
             break;
 
         case instruct::ROR_a:{
@@ -594,16 +570,13 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::ADC_abs:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            uint8_t temp;
-            uint8_t checkV;
-            temp = read_abs();
-            checkV = (A>>7 & temp>>7);
-            A = A+temp+SR.C;
-            SR.Z = A;
-            SR.S = A>>7;
-            if(checkV){
-             SR.V= !(temp>>7 & A>>7);
-           }
+            uint8_t m = read_abs();
+            unsigned int t = m + A +(SR.C ? 1 : 0);                                                 //if carry is set add 1 to result
+            SR.Z = !(t&0xFF);                                                                       //set the zero flag if the result will be zero
+            SR.S = (t&0x80);                                                                        //set the sign flag to bit 7
+            SR.V = (!((A^m)&0x80)&&((A^t)&0x80));                                                   //if the sign changes set overflow
+            SR.C = t > 0xFF;                                                                        //if result is greater than 255 set carry
+            A = t&0xFF;                                                                             //A is only 8 bits so mask the rest
         }
             break;
 
@@ -629,31 +602,25 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::ADC_ind_y:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            uint8_t temp;
-            uint8_t checkV;
-            temp = read_ind_y();
-            checkV = (A>>7 & temp>>7);
-            A = A+temp+SR.C;
-            SR.Z = A;
-            SR.S = A>>7;
-            if(checkV){
-             SR.V= !(temp>>7 & A>>7);
-           }
+            uint8_t m = read_ind_y();
+            unsigned int t = m + A +(SR.C ? 1 : 0);                                                 //if carry is set add 1 to result
+            SR.Z = !(t&0xFF);                                                                       //set the zero flag if the result will be zero
+            SR.S = (t&0x80);                                                                        //set the sign flag to bit 7
+            SR.V = (!((A^m)&0x80)&&((A^t)&0x80));                                                   //if the sign changes set overflow
+            SR.C = t > 0xFF;                                                                        //if result is greater than 255 set carry
+            A = t&0xFF;                                                                             //A is only 8 bits so mask the rest
         }
             break;
 
         case instruct::ADC_zpg_x:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            uint8_t temp;
-            uint8_t checkV;
-            temp = read_zpg(X);
-            checkV = (A>>7 & temp>>7);
-            A = A+temp+SR.C;
-            SR.Z = A;
-            SR.S = A>>7;
-            if(checkV){
-             SR.V= !(temp>>7 & A>>7);
-           }
+            uint8_t m = read_zpg(X);
+            unsigned int t = m + A +(SR.C ? 1 : 0);                                                 //if carry is set add 1 to result
+            SR.Z = !(t&0xFF);                                                                       //set the zero flag if the result will be zero
+            SR.S = (t&0x80);                                                                        //set the sign flag to bit 7
+            SR.V = (!((A^m)&0x80)&&((A^t)&0x80));                                                   //if the sign changes set overflow
+            SR.C = t > 0xFF;                                                                        //if result is greater than 255 set carry
+            A = t&0xFF;                                                                             //A is only 8 bits so mask the rest
         }
             break;
 
@@ -678,16 +645,13 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::ADC_abs_y:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            uint8_t temp;
-            uint8_t checkV;
-            temp = read_abs(Y);
-            checkV = (A>>7 & temp>>7);
-            A = A+temp+SR.C;
-            SR.Z = A;
-            SR.S = A>>7;
-            if(checkV){
-             SR.V= !(temp>>7 & A>>7);
-           }
+            uint8_t m = read_abs(Y);
+            unsigned int t = m + A +(SR.C ? 1 : 0);                                                 //if carry is set add 1 to result
+            SR.Z = !(t&0xFF);                                                                       //set the zero flag if the result will be zero
+            SR.S = (t&0x80);                                                                        //set the sign flag to bit 7
+            SR.V = (!((A^m)&0x80)&&((A^t)&0x80));                                                   //if the sign changes set overflow
+            SR.C = t > 0xFF;                                                                        //if result is greater than 255 set carry
+            A = t&0xFF;                                                                             //A is only 8 bits so mask the rest
         }
             break;
 
