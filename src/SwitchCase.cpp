@@ -511,7 +511,6 @@ void M6502_core::execute(uint8_t val){
             break;
 
         case instruct::ADC_zpg:
-            std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             {
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             uint8_t temp;
@@ -550,9 +549,23 @@ void M6502_core::execute(uint8_t val){
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             uint8_t temp;
             uint8_t checkV;
+            int tmp;
             temp = M->read(++PC);
             checkV = (A>>7 & temp>>7);
-            A = A+temp+SR.C;
+            A = A+temp;
+            if(SR.C){
+                A++;
+            }
+            tmp = A+temp;
+            if(SR.C){
+                tmp++;
+            }
+            if(tmp > 255){
+                SR.C = true;
+            }
+            else{
+                SR.C = false;
+            }
             SR.Z = A;
             SR.S = A>>7;
             if(checkV){

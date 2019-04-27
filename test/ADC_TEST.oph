@@ -1,15 +1,56 @@
- .org $F000
+ .org $0000
+ .word $BEEF
+ .word $DEAD
+  .advance $BEF0
+ .byte $69
+ .advance $DEAD
+ .byte $69
+ .advance $F000
 RESET:
     LDA #$69     ;immediates
     ADC #$10
     STA $0200
     
     LDA #$69
-    STA $00
-    ADC $00
+    STA $08
+    ADC $08
     STA $0201
     
+    LDA #$1
+    ADC $0201
+    STA $0202
     
+    LDA #$10
+    LDX #$08
+    ADC $00,X
+    STA $0203
+    
+    LDA #$10
+    LDX #$01
+    ADC $01FF,X
+    STA $0204
+    
+    LDA #$10
+    LDY #$01
+    ADC $01FF,Y
+    STA $0205
+    
+    LDA #$10
+    LDX #$02
+    ADC ($00,X)
+    STA $0206
+    
+    LDA #$10
+    LDY #$01
+    ADC ($00),Y
+    STA $0207
+    
+    CLC
+    LDA #$FF
+    ADC #$01
+    LDA #$00
+    ADC #$00
+    STA $0208
     
     BRK
 NMI:
