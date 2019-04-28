@@ -1,6 +1,7 @@
 #include "memory.h"
 #include <stdint.h>
 #include <iostream>
+#include <fstream>
 
 M6502_memory::M6502_memory(std::string romfile){
     char* buffer;
@@ -26,10 +27,12 @@ M6502_memory::M6502_memory(std::string romfile){
 }
 
 void M6502_memory::dump(){
-    std::cout <<"MEMORY DUMP: "<<std::endl;
+    std::ofstream outfile ("memory_dump.txt");
+    outfile <<"MEMORY DUMP: "<<std::endl;
     for(int i=0; i<(1<<16);i++){
-        std::cout << std::hex << unsigned(i) << ": "<< unsigned(M[i]) << std::endl;
+        outfile << std::hex << unsigned(i) << ": "<< unsigned(M[i]) << std::endl;
     }
+    outfile.close();
 }
 
 uint8_t M6502_memory::read(uint16_t addr){

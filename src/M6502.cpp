@@ -30,9 +30,16 @@ uint8_t M6502_core::stack_pop(){                        //pop from the 6502's st
 
 void M6502_core::run(){                                  //execute 1 instruction
     IR= M->read(PC); 
-    std::cout<< "IR is: " << unsigned(IR) << std::endl;  //fetch instruction
+    std::cout<< "PRE -- " << "IR: " << unsigned(IR) <<std::endl;                //fetch instruction
+    std::cout<< "SR.C: " << SR.C << " SR.Z: " << SR.Z << " SR.I: " << SR.I << " SR.D: " << SR.D;
+    std::cout<< " SR.B: " << SR.B << " SR.V: " << SR.V << " SR.S: " << SR.S << std::endl;
+    std::cout<< std::hex << "A: " << unsigned(A) << " X: " << unsigned(X) << " Y: " << unsigned(Y) << " SP: " << unsigned(SP) << " PC: " << unsigned(PC) << std::endl;
     execute(IR);
     PC++;
+    std::cout<< "POST -- ";
+    std::cout<< "SR.C: " << SR.C << " SR.Z: " << SR.Z << " SR.I: " << SR.I << " SR.D: " << SR.D;
+    std::cout<< " SR.B: " << SR.B << " SR.V: " << SR.V << " SR.S: " << SR.S << std::endl;
+    std::cout<< std::hex << "A: " << unsigned(A) << " X: " << unsigned(X) << " Y: " << unsigned(Y) << " SP: " << unsigned(SP) << " PC: " << unsigned(PC) << std::endl;
 }
 
 void M6502_core::reset(){
