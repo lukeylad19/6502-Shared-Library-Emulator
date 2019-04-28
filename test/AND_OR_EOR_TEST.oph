@@ -1,0 +1,53 @@
+.org $0000
+.byte %11111000
+.byte %00011111
+.word $1002
+.advance $1000
+.byte %10101010
+.byte %01010101     
+.byte %11111100    
+.byte %00111111     
+.advance $F000
+RESET:              ;AND 
+    LDA $00
+    AND #%00011111  ;AND immediate
+    STA $0200       ;HEX 18
+    LDA $01
+    AND $00         ;AND ZPG
+    STA $0201       ;Hex 18
+    LDA $00
+    LDX #$1
+    AND $00,X       ;AND zpg,X
+    STA $0202       ;Hex 18
+    LDA $1000
+    AND $1000       ;AND abs
+    STA $0203       ;Hex AA 
+    LDA $1001
+    LDX #$01
+    AND $1000,X     ;AND abs,X
+    STA $0204       ;Hex 55
+    LDY #$01
+    AND $1000,Y     ;AND abs,Y
+    STA $0205       ;Hex 55
+    LDA $1003
+    LDX #$02       
+    AND ($00,X)     ;AND ind,X
+    STA $0206       ;Hex 3C
+    LDA $1002       
+    AND ($02),Y     ;AND ind,Y
+    STA $0207       ;Hex 3C
+    BRK
+NMI:
+    NOP
+    RTI
+IRQ:
+    NOP
+    RTI
+.advance $FFFA
+.word NMI
+.word RESET
+.word IRQ
+.outfile "AND_OR_EOR_TEST.bin"
+
+
+

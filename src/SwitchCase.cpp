@@ -188,7 +188,7 @@ void M6502_core::execute(uint8_t val){
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             A = A & read_ind_x();
             SR.S = (A>>7);
-            SR.Z = A;
+            SR.Z = !A;
             break;
 
         case instruct::BIT_zpg:
@@ -198,8 +198,11 @@ void M6502_core::execute(uint8_t val){
             SR.Z = A & read_zpg();
             break;
 
-        case instruct::NAD_zpg:
+        case instruct::AND_zpg:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
+            A = (A & read_zpg());
+            SR.S = (A>>7);
+            SR.Z = !A;
             break;
 
         case instruct::ROL_zpg:{
@@ -224,7 +227,7 @@ void M6502_core::execute(uint8_t val){
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             A = (A & M->read(++PC));
             SR.S = (A>>7);
-            SR.Z = A;
+            SR.Z = !A;
             break;
 
         case instruct::ROL_a:{
@@ -249,9 +252,9 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::AND_abs:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            A = (read_abs(X) & A);
+            A = (read_abs() & A);
             SR.S = (A>>7);
-            SR.Z = A;
+            SR.Z = !A;
             break;
 
         case instruct::ROL_abs:{
@@ -278,14 +281,14 @@ void M6502_core::execute(uint8_t val){
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             A = A & read_ind_y();
             SR.S = (A>>7);
-            SR.Z = A;
+            SR.Z = !A;
             break;
 
         case instruct::AND_zpg_x:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            A = (read_zpg(X) & X);
+            A = A&read_zpg(X);
             SR.S = (A>>7);
-            SR.Z = A;
+            SR.Z = !A;
             break;
 
         case instruct::ROL_zpg_x:{
@@ -309,16 +312,16 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::AND_abs_y:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            A =(read_abs(Y) &  Y);
+            A =(read_abs(Y) &  A);
             SR.S = (A>>7);
             SR.Z = A;
             break;
 
         case instruct::AND_abs_x:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            A = (read_abs(X) & X);
+            A = (read_abs(X) & A);
             SR.S = (A>>7);
-            SR.Z = A;
+            SR.Z = !A;
             break;
 
         case instruct::ROL_abs_x:{

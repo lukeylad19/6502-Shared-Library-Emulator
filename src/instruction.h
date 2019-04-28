@@ -23,7 +23,7 @@
         JSR_abs = 0x20,
         AND_x_ind = 0x21,
         BIT_zpg = 0x24,
-        NAD_zpg = 0x25,
+        AND_zpg = 0x25,
         ROL_zpg = 0x26,
         PLP_impl = 0x28,
         AND_n = 0x29,
