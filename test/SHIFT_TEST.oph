@@ -1,0 +1,30 @@
+.org $0000
+.advance $F000
+RESET:
+    LDA #$01
+    ASL
+    STA $0200
+    CLC
+    LSR
+    STA $0201
+    CLC
+    LDA #%11000000
+    ASL
+    STA $0202
+    CLC
+    LDA #$03
+    LSR
+    STA $0203
+    CLC
+    BRK
+NMI:
+    NOP
+    RTI
+IRQ:
+    NOP
+    RTI
+.advance $FFFA
+.word NMI
+.word RESET
+.word IRQ
+.outfile "SHIFT_TEST.bin"
