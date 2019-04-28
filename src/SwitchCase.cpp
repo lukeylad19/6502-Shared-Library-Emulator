@@ -85,11 +85,15 @@ void M6502_core::execute(uint8_t val){
         case instruct::ORA_x_ind:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             A |= read_ind_x();
+            SR.S = A&0x08;
+            SR.Z = !A;
             break;
 
         case instruct::ORA_zpg:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             A |= read_zpg();
+            SR.S = A&0x08;
+            SR.Z = !A;
             break;
 
         case instruct::ASL_zpg:
@@ -105,6 +109,8 @@ void M6502_core::execute(uint8_t val){
         case instruct::ORA_n:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
              A |= M->read(++PC);
+             SR.S = A&0x08;
+             SR.Z = !A;
             break;
 
         case instruct::ASL_a:
@@ -116,6 +122,8 @@ void M6502_core::execute(uint8_t val){
         case instruct::ORA_abs:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             A|= read_abs();
+            SR.S = A&0x08;
+            SR.Z = !A;
             break;
 
         case instruct::ASL_abs:{
@@ -137,11 +145,15 @@ void M6502_core::execute(uint8_t val){
         case instruct::ORA_ind_y:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             A|= read_ind_y();
+            SR.S = A&0x08;
+            SR.Z = !A;
             break;
 
         case instruct::ORA_zpg_x:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             A|= read_zpg(X);
+            SR.S = A&0x08;
+            SR.Z = !A;
             break;
 
         case instruct::ASL_zpg_x:{
@@ -161,11 +173,15 @@ void M6502_core::execute(uint8_t val){
         case instruct::ORA_abs_y:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             A|= read_abs(Y);
+            SR.S = A&0x08;
+            SR.Z = !A;
             break;
 
         case instruct::ORA_abs_x:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             A|= read_abs(X);
+            SR.S = A&0x08;
+            SR.Z = !A;
             break;
 
         case instruct::ASL_abs_x:{

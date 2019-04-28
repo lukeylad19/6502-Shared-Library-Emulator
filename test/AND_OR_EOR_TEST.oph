@@ -2,11 +2,19 @@
 .byte %11111000
 .byte %00011111
 .word $1002
+.byte %00000010
+.byte %00000100
+.word $1007
 .advance $1000
 .byte %10101010
 .byte %01010101     
 .byte %11111100    
-.byte %00111111     
+.byte %00111111
+.byte %00001000     ;$1004
+.byte %00010000
+.byte %00100000
+.byte %01000000
+.byte %10000000     
 .advance $F000
 RESET:              ;AND 
     LDA $00
@@ -36,6 +44,39 @@ RESET:              ;AND
     LDA $1002       
     AND ($02),Y     ;AND ind,Y
     STA $0207       ;Hex 3C
+
+                    ;ORA
+    LDA #$00
+    ORA #$01
+    ORA $04
+    LDX #$05
+    ORA $00,X
+    ORA $1004
+    LDX #$01
+    LDY #$02
+    ORA $1004,X
+    ORA $1004,Y
+    LDX #$06
+    LDY #$01
+    ORA ($00,X)
+    ORA ($06),Y
+    STA $0208      ;$FF
+                   ;EOR
+    LDA #$00
+    EOR #$01
+    EOR $04
+    LDX #$05
+    EOR $00,X
+    EOR $1004
+    LDX #$01
+    LDY #$02
+    EOR $1004,X
+    EOR $1004,Y
+    LDX #$06
+    LDY #$01
+    EOR ($00,X)
+    EOR ($06),Y
+    STA $0209      ;$FF
     BRK
 NMI:
     NOP
