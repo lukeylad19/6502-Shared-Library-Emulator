@@ -1,0 +1,28 @@
+.org $F000 
+RESET:
+    LDA #$69 
+    LDX #$02
+    STA $02
+    STA $0200
+    INC $02
+    INC $0200
+    INC $00,X
+    INC $1FE,X
+    LDX #$02
+    INX
+    STX $0201
+    LDY #$02
+    INY
+    STY $0202
+    
+
+    BRK
+NMI:
+    NOP
+IRQ:
+    NOP
+.advance $FFFA
+.word NMI
+.word RESET
+.word IRQ
+.outfile "INC_TEST.bin"

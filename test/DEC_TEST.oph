@@ -1,0 +1,28 @@
+ .org $F000 
+RESET:
+    LDA #$69 
+    LDX #$02
+    STA $02
+    STA $0200
+    DEC $02
+    DEC $0200
+    DEC $00,X
+    DEC $1FE,X
+    LDX #$02
+    DEX
+    STX $0201
+    LDY #$02
+    DEY
+    STY $0202
+    
+
+    BRK
+NMI:
+    NOP
+IRQ:
+    NOP
+.advance $FFFA
+.word NMI
+.word RESET
+.word IRQ
+.outfile "DEC_TEST.bin"
