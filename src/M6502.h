@@ -51,12 +51,12 @@ class M6502_core {
 
     void write_SR(uint8_t status){
         SR.C = status & 0x01;
-        SR.Z = status & 0x02;
-        SR.I = status & 0x04;
-        SR.D = status & 0x08;
-        SR.B = status & 0x10;
-        SR.V = status & 0x40;
-        SR.S = status & 0x80;
+        SR.Z = (status & 0x02)>>1;
+        SR.I = (status & 0x04)>>2;
+        SR.D = (status & 0x08)>>3;
+        SR.B = (status & 0x10)>>4;
+        SR.V = (status & 0x40)>>6;
+        SR.S = (status & 0x80)>>7;
     }
 
     /*-------------------------------------------------*/
