@@ -39,7 +39,7 @@ void M6502_core::run(){                                  //execute 1 instruction
     std::cout<< "POST -- ";
     std::cout<< "SR.C: " << SR.C << " SR.Z: " << SR.Z << " SR.I: " << SR.I << " SR.D: " << SR.D;
     std::cout<< " SR.B: " << SR.B << " SR.V: " << SR.V << " SR.S: " << SR.S << std::endl;
-    std::cout<< std::hex << "A: " << unsigned(A) << " X: " << unsigned(X) << " Y: " << unsigned(Y) << " SP: " << unsigned(SP) << " PC: " << unsigned(PC) << std::endl;
+    std::cout<< std::hex << "A: " << unsigned(A) << " X: " << unsigned(X) << " Y: " << unsigned(Y) << " SP: " << unsigned(SP) << " PC: " << unsigned(PC) << std::endl << std::endl;
 }
 
 void M6502_core::reset(){
