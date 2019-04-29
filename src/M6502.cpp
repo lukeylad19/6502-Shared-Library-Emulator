@@ -52,7 +52,7 @@ void M6502_core::reset(){
     std::cout << "set PC to: " << PC << std::endl;
 
     SP = 0xFD;                                           //reset the stack pointer
-    write_SR(0x02);                                      //reset the status register
+    write_SR(0x20);                                      //reset the status register
 }
 
 void M6502_core::irq(){
