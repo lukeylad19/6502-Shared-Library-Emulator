@@ -16,6 +16,12 @@ RESET:
     LSR
     STA $0203
     CLC
+    LDA #$01
+    ROR 
+    STA $0204
+    CLC
+    ROL
+    STA $0205
     BRK
 NMI:
     NOP

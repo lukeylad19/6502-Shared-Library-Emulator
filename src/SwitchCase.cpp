@@ -242,12 +242,10 @@ void M6502_core::execute(uint8_t val){
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             uint8_t tmp = read_zpg();
             SR.C = tmp >> 7;
-            A = tmp << 1;
-            if(SR.C){ A = A+0x01;}
-            if(A == 0){
-                SR.Z = 1;
-            }
-            SR.S = A >>7;
+            tmp = (tmp << 1)+ (SR.C ? 1 : 0);
+            M->write(M->read(PC-1),tmp);
+            SR.Z = !tmp;
+            SR.S = tmp>>7;
         }   
             break;
 
@@ -265,14 +263,10 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::ROL_a:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            uint8_t tmp = A;
-            SR.C = tmp >> 7;
-            A = tmp << 1;
-            if(SR.C){ A = A+0x01;}
-            if(A == 0){
-                SR.Z = 1;
-            }
-            SR.S = A >>7;
+            SR.C = A>>7;
+            A = (A << 1)+ (SR.C ? 1 : 0);
+            SR.Z = !A;
+            SR.S = A>>7;
         }  
             break;
 
@@ -294,12 +288,10 @@ void M6502_core::execute(uint8_t val){
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             uint8_t tmp = read_abs();
             SR.C = tmp >> 7;
-            A = tmp << 1;
-            if(SR.C){ A = A+0x01;}
-            if(A == 0){
-                SR.Z = 1;
-            }
-            SR.S = A >>7;
+            tmp = (tmp << 1)+ (SR.C ? 1 : 0);
+            M->write(M->readWord(PC-2),tmp);
+            SR.Z = !tmp;
+            SR.S = tmp>>7;
         }  
             break;
 
@@ -328,12 +320,10 @@ void M6502_core::execute(uint8_t val){
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             uint8_t tmp = read_zpg(X);
             SR.C = tmp >> 7;
-            A = tmp << 1;
-            if(SR.C){ A = A+0x01;}
-            if(A == 0){
-                SR.Z = 1;
-            }
-            SR.S = A >>7;
+            tmp = (tmp << 1)+ (SR.C ? 1 : 0);
+            M->write(M->read(PC-1)+X,tmp);
+            SR.Z = !tmp;
+            SR.S = tmp>>7;
         }  
             break;
 
@@ -361,12 +351,10 @@ void M6502_core::execute(uint8_t val){
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             uint8_t tmp = read_abs(X);
             SR.C = tmp >> 7;
-            A = tmp << 1;
-            if(SR.C){ A = A+0x01;}
-            if(A == 0){
-                SR.Z = 1;
-            }
-            SR.S = A >>7;
+            tmp = (tmp << 1)+ (SR.C ? 1 : 0);
+            M->write(M->readWord(PC-2)+X,tmp);
+            SR.Z = !tmp;
+            SR.S = tmp>>7;
         }  
             break;
 
@@ -554,13 +542,11 @@ void M6502_core::execute(uint8_t val){
         case instruct::ROR_zpg:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             uint8_t tmp = read_zpg();
-            SR.C = tmp >> 7;
-            A = tmp >> 1;
-            if(SR.C){ A = A+0x80;}
-            if(A == 0){
-                SR.Z = 1;
-            }
-            SR.S = A >>7;
+            SR.C = tmp&0x01;
+            tmp = (tmp >> 1)|(SR.C ? 0x80 : 0x00);
+            M->write(M->read(PC-1),tmp);
+            SR.Z = !tmp;
+            SR.S = tmp >>7;
         }  
             break;
 
@@ -583,13 +569,9 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::ROR_a:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            uint8_t tmp = A;
-            SR.C = tmp >> 7;
-            A = tmp >> 1;
-            if(SR.C){ A = A+0x80;}
-            if(A == 0){
-                SR.Z = 1;
-            }
+            SR.C = A&0x01;
+            A = (A >> 1)|(SR.C ? 0x80 : 0x00);
+            SR.Z = !A;
             SR.S = A >>7;
         }  
             break;
@@ -614,13 +596,11 @@ void M6502_core::execute(uint8_t val){
         case instruct::ROR_abs:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             uint8_t tmp = read_abs();
-            SR.C = tmp >> 7;
-            A = tmp >> 1;
-            if(SR.C){ A = A+0x80;}
-            if(A == 0){
-                SR.Z = 1;
-            }
-            SR.S = A >>7;
+            SR.C = tmp&0x01;
+            tmp = (tmp >> 1)|(SR.C ? 0x80 : 0x00);
+            M->write(M->readWord(PC-2),tmp);
+            SR.Z = !tmp;
+            SR.S = tmp >>7;
         }  
             break;
 
@@ -658,13 +638,11 @@ void M6502_core::execute(uint8_t val){
         case instruct::ROR_zpg_x:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             uint8_t tmp = read_zpg(X);
-            SR.C = tmp >> 7;
-            A = tmp >> 1;
-            if(SR.C){ A = A+0x80;}
-            if(A == 0){
-                SR.Z = 1;
-            }
-            SR.S = A >>7;
+            SR.C = tmp&0x01;
+            tmp = (tmp >> 1)|(SR.C ? 0x80 : 0x00);
+            M->write(M->read(PC-1)+X,tmp);
+            SR.Z = !tmp;
+            SR.S = tmp >>7;
         }  
             break;
 
@@ -704,13 +682,11 @@ void M6502_core::execute(uint8_t val){
         case instruct::ROR_abs_x:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             uint8_t tmp = read_abs(X);
-            SR.C = tmp >> 7;
-            A = tmp >> 1;
-            if(SR.C){ A = A+0x80;}
-            if(A == 0){
-                SR.Z = 1;
-            }
-            SR.S = A >>7;
+            SR.C = tmp&0x01;
+            tmp = (tmp >> 1)|(SR.C ? 0x80 : 0x00);
+            M->write(M->readWord(PC-2)+X,tmp);
+            SR.Z = !tmp;
+            SR.S = tmp >>7;
         }  
             break;
 

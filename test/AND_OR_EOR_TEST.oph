@@ -89,6 +89,3 @@ IRQ:
 .word RESET
 .word IRQ
 .outfile "AND_OR_EOR_TEST.bin"
-
-
-
