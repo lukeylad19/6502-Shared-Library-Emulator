@@ -1,0 +1,23 @@
+.org $0000
+JUMP2:
+.word $F008
+.advance $F000
+RESET:
+    LDA #$01
+    JMP (JUMP2)           ;jump1 to test abs jump2 to test indirect
+    STA $0200           ;this should not be written
+JUMP1:
+    LDA #$02
+    STA $0201           ;this should be written as $02
+    BRK
+NMI:
+    NOP
+    RTI
+IRQ:
+    NOP
+    RTI
+.advance $FFFA
+.word NMI
+.word RESET
+.word IRQ
+.outfile "JMP_TEST.bin"

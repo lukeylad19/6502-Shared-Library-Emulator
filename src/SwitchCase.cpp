@@ -419,7 +419,7 @@ void M6502_core::execute(uint8_t val){
         case instruct::JMP_abs:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             PC = M->readWord(++PC);
-            PC = PC+1;
+            PC--;
             break;
 
         case instruct::EOR_abs:
@@ -579,6 +579,7 @@ void M6502_core::execute(uint8_t val){
         case instruct::JMP_ind:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             PC = read_ind();
+            PC--;
             break;
 
         case instruct::ADC_abs:{
