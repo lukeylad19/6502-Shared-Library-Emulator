@@ -1071,7 +1071,6 @@ void M6502_core::execute(uint8_t val){
             SR.S = (tmp&0x80) >> 7;
             SR.Z = (tmp==0);
             SR.C = (A >= tm);
-            std::cout<< std::hex << unsigned(A) <<" " << unsigned(tm)<< std::endl;
             }
             break;
 
