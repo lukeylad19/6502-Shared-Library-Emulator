@@ -14,9 +14,9 @@ uint8_t M6502_core::read_zpg(uint8_t index){                //read using indexed
     return M->read(0x0000+(M->read(++PC))+index);
 }
 
-uint8_t M6502_core::read_rel(){                             //read using relative addressing
-    uint16_t tmp = PC;
-    return M->read(tmp+signed(M->read(++PC)));
+uint16_t M6502_core::read_rel(){                             //read using relative addressing
+    uint16_t tmp = PC+2;
+    return tmp+signed(M->read(++PC));
 }
 uint8_t M6502_core::read_abs(){                             //read using absolute addressing
     uint8_t temp = M->read(M->readWord(++PC));
@@ -151,7 +151,10 @@ void M6502_core::execute(uint8_t val){
         case instruct::BPL_rel:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             if(SR.S == 0){
-                PC = (read_rel() + PC);
+                PC = read_rel();
+                PC--;
+            }else{
+                PC++;
             }
             break;
 
@@ -298,7 +301,10 @@ void M6502_core::execute(uint8_t val){
         case instruct::BMI_rel:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             if(SR.S == 1){
-                PC = (read_rel() + PC);
+                PC = read_rel();
+                PC--;
+            }else{
+                PC++;
             }
             break;
 
@@ -444,7 +450,10 @@ void M6502_core::execute(uint8_t val){
         case instruct::BVC_rel:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             if(SR.V == 0){
-                PC = (read_rel() + PC );
+                PC = (read_rel() );
+                PC--;
+            }else{
+                PC++;
             }
             break;
 
@@ -608,7 +617,10 @@ void M6502_core::execute(uint8_t val){
         case instruct::BVS_rel:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             if(SR.V == 1){
-                PC = (read_rel() + PC);
+                PC = (read_rel());
+                PC--;
+            }else{
+                PC++;
             }
             break;
 
@@ -747,8 +759,11 @@ void M6502_core::execute(uint8_t val){
 
         case instruct::BCC_rel:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            if(SR.C == 1){
-                PC = (read_rel() + PC);
+            if(SR.C == 0){
+                PC = (read_rel());
+                PC--;
+            }else{
+                PC++;
             }
             break;
 
@@ -911,7 +926,11 @@ void M6502_core::execute(uint8_t val){
         case instruct::BCS_rel:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             if(SR.C == 1){
-                PC = (read_rel() + PC);
+                uint16_t tmp=read_rel();
+                PC = tmp;
+                PC--;
+            }else{
+                PC++;
             }
             break;
 
@@ -1117,7 +1136,10 @@ void M6502_core::execute(uint8_t val){
         case instruct::BNE_rel:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             if(SR.Z == 0){
-                PC = (read_rel() + PC);
+                PC = (read_rel());
+                PC--;
+            }else{
+                PC++;
             }
             break;
 
@@ -1309,7 +1331,10 @@ void M6502_core::execute(uint8_t val){
         case instruct::BEQ_rel:
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             if(SR.Z == 1){
-                PC = (read_rel() + PC);
+                PC = (read_rel());
+                PC--;
+            }else{
+                PC++;
             }
             break;
 

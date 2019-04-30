@@ -71,7 +71,7 @@ class M6502_core {
     /*               See SwitchCase.cpp                  */
     uint8_t read_zpg();
     uint8_t read_zpg(uint8_t);
-    uint8_t read_rel();
+    uint16_t read_rel();
     uint8_t read_abs();
     uint8_t read_abs(uint8_t);
     uint16_t read_ind();

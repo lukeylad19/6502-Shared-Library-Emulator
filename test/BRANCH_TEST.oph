@@ -1,0 +1,65 @@
+.org $F000
+RESET:
+    LDX #$01
+    LDA #$FF
+    ADC #$01
+    BCS BR1
+    JMP DONE
+BR1:
+    STX $0200
+    CLC
+    BCC BR2
+    JMP DONE
+BR2:
+    CLC
+    STX $0201
+    LDA #$01
+    CMP #$01
+    BEQ BR3
+    JMP DONE
+BR3:
+    CLC
+    STX $0202
+    LDA #$81
+    ADC #$01
+    BMI BR4
+    JMP DONE
+BR4:
+    CLC
+    STX $0203
+    BNE BR5
+    JMP DONE
+BR5:
+    CLC
+    STX $0204
+    LDA #$02
+    ADC #$02
+    BPL BR6
+    JMP DONE
+BR6:
+    CLC
+    STX $0205
+    BVC BR7
+    JMP DONE
+BR7:
+    CLC
+    STX $0206
+    LDA #$7F
+    ADC #$01
+    BVS BR8
+    JMP DONE
+BR8:
+    STX $0207
+DONE:
+    BRK
+NMI:
+    NOP
+    RTI
+IRQ:
+    NOP
+    RTI
+.advance $FFFA
+.word NMI
+.word RESET
+.word IRQ
+.outfile "BRANCH_TEST.bin"
