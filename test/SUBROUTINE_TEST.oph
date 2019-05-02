@@ -1,0 +1,19 @@
+.org $F000
+RESET:
+    LDA #$01
+    LDX #$02
+    JSR STORE
+    STA $0200
+    BRK
+STORE:
+    STX $0201
+    RTS 
+NMI:
+    RTI
+IRQ:
+    RTI
+.advance $FFFA
+.word NMI
+.word RESET
+.word IRQ
+.outfile "SUBROUTINE_TEST.bin"

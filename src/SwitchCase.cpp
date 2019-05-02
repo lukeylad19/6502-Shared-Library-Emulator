@@ -213,11 +213,15 @@ void M6502_core::execute(uint8_t val){
             }
             break;
 
-        case instruct::JSR_abs:
+        case instruct::JSR_abs:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            stack_push(PC+2);
-            PC = M->readWord(PC++);
-            PC = PC+1;
+            uint8_t PCL = (PC+2)&0xFF;
+            uint8_t PCH = (PC+2)>>8;
+            stack_push(PCH);
+            stack_push(PCL);
+            PC = M->readWord(++PC);
+            PC--;
+        }
             break;
 
         case instruct::AND_x_ind:
@@ -370,10 +374,13 @@ void M6502_core::execute(uint8_t val){
         }  
             break;
 
-        case instruct::RTI_impl:
+        case instruct::RTI_impl:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             write_SR(stack_pop());
-            PC = stack_pop();
+            uint16_t PCL = stack_pop();
+            uint16_t PCH = stack_pop()<<8;
+            PC = PCL|PCH;
+        }
             break;
 
         case instruct::EOR_x_ind:
@@ -524,9 +531,12 @@ void M6502_core::execute(uint8_t val){
         }   
             break;
 
-        case instruct::RTS_impl:
+        case instruct::RTS_impl:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            PC = stack_pop();
+            uint16_t PCL = stack_pop();
+            uint16_t PCH = stack_pop()<<8;
+            PC = PCL|PCH;
+        }
             break;
 
         case instruct::ADC_x_ind:{

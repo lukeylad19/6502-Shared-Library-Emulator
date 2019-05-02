@@ -1,6 +1,6 @@
 .org $F000
 RESET:
-    LDX #$01
+    LDX #$01    ;stores 1 in $0200 to $0207
     LDA #$FF
     ADC #$01
     BCS BR1
