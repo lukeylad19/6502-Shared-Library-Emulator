@@ -227,11 +227,14 @@ void M6502_core::execute(uint8_t val){
             SR.Z = !A;
             break;
 
-        case instruct::BIT_zpg:
+        case instruct::BIT_zpg:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            SR.S = read_zpg() >> 7;
-            SR.V = read_zpg() >> 6;
-            SR.Z = A & read_zpg();
+            uint8_t m = read_zpg();
+            uint8_t temp = (m & A);
+            SR.S = m >> 7;
+            SR.V = m >> 6;
+            SR.Z = !temp;
+        }
             break;
 
         case instruct::AND_zpg:
@@ -273,11 +276,14 @@ void M6502_core::execute(uint8_t val){
         }  
             break;
 
-        case instruct::BIT_abs:
+        case instruct::BIT_abs:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
-            SR.S = read_abs() >> 7;
-            SR.V = read_abs() >> 6;
-            SR.Z = A & read_abs();
+            uint8_t m = read_abs();
+            uint8_t temp = (m & A);
+            SR.S = m >> 7;
+            SR.V = m >> 6;
+            SR.Z = !temp;
+            }
             break;
 
         case instruct::AND_abs:
