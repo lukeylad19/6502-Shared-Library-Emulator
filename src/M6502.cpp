@@ -62,7 +62,11 @@ void M6502_core::irq(){
         stack_push(PC&0xFF);                             //push lower byte of PC to stack
         stack_push(read_SR());                           //push status register to stack
         SR.I = true;                                     //disable interrupts
-        PC = ((M->read(IRQ_H)<<8)+M->read(IRQ_L));       //update PC with IRQ routine
+        uint16_t tmp = M->read(IRQ_H);
+        tmp = tmp << 8;
+        tmp|= M->read(IRQ_L);
+        PC = (tmp);                                      //update PC with IRQ routine
+        std::cout << "IRQ PC " << PC << std::endl;
     }
 }
 
@@ -72,7 +76,11 @@ void M6502_core::nmi(){
     stack_push(PC&0xFF);                                 //push lower byte of PC to stack
     stack_push(read_SR());                               //push status register to stack
     SR.I = true;                                         //disable interrupts
-    PC = ((M->read(NMI_H)<<8)+M->read(NMI_L));           //update PC with NMI routine
+    uint16_t tmp = M->read(IRQ_H);
+    tmp = tmp << 8;
+    tmp|= M->read(IRQ_L);
+    PC = (tmp);           //update PC with NMI routine
+    std::cout << "NMI PC " << PC << std::endl;
 }
 
 /*void M6502_core::execute(uint8_t val){

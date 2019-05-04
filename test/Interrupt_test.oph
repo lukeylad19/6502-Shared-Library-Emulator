@@ -1,0 +1,23 @@
+.org $F000
+RESET:
+    LDX #$FF
+LSTART:
+    LDA #$01
+    STA $0200,X
+    DEX
+    CPX 0
+    BNE LSTART
+    BRK
+NMI:
+    LDA #$02
+    STA $0200,X
+    RTI
+IRQ:
+    LDA #$03
+    STA $0200,X
+    RTI
+.advance $FFFA
+.word NMI
+.word RESET
+.word IRQ
+.outfile "INTERRUPT_TEST.bin"

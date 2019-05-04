@@ -9,6 +9,7 @@ all:
 	g++ -c -Wall -Werror -fpic $(SRC) 
 	g++ -shared -o lib6502.so $(OBJ)
 	g++ ./test/test.cpp -I./src -L./ -l6502 -o 6502_test
+	g++ ./test/interrupt.cpp -I./src -L./ -l6502 -o interrupt_test
 
 clean:
 	rm *.so *.o 6502_test

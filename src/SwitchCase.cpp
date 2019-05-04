@@ -16,7 +16,10 @@ uint8_t M6502_core::read_zpg(uint8_t index){                //read using indexed
 
 uint16_t M6502_core::read_rel(){                             //read using relative addressing
     uint16_t tmp = PC+2;
-    return tmp+signed(M->read(++PC));
+    uint16_t m = M->read(++PC);
+    m = m|((m&0x80 ? 0xFF:0x00)<<8);
+
+    return tmp+m;
 }
 uint8_t M6502_core::read_abs(){                             //read using absolute addressing
     uint8_t temp = M->read(M->readWord(++PC));
@@ -380,6 +383,9 @@ void M6502_core::execute(uint8_t val){
             uint16_t PCL = stack_pop();
             uint16_t PCH = stack_pop()<<8;
             PC = PCL|PCH;
+            PC--;
+            std::cout << "Set PC to :" << std::hex << std::uppercase << unsigned(PC) << std::endl;
+            SR.I = false;
         }
             break;
 
