@@ -1,9 +1,10 @@
 #include "memory.h"
 #include "M6502.h"
+#include <iostream>
 
 extern "C"                          //for compatibility with Python ctypes
 {
-    M6502_memory* M6502_memory_new(std::string rom){return new M6502_memory(rom);}
+    M6502_memory* M6502_memory_new(char* rom){std::cout << "M6502_memory_new : "<< rom << std::endl;return new M6502_memory(std::string(rom));}
     uint8_t M6502_memory_read(M6502_memory* m,uint16_t addr){return m->read(addr);}
     uint16_t M6502_memory_readWord(M6502_memory* m,uint16_t addr){return m->read(addr);}
     void M6502_memory_write(M6502_memory* m,uint16_t addr,uint8_t data){m->write(addr,data);}

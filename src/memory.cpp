@@ -6,6 +6,7 @@
 M6502_memory::M6502_memory(std::string romfile){
     char* buffer;
     long size;
+    std::cout << "trying to load ROM" << std::endl;
     std::ifstream rom (romfile,std::ios::in|std::ios::binary|std::ios::ate);
     if(rom.good()){
         size = rom.tellg();

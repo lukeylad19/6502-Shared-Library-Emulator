@@ -8,19 +8,19 @@ class PY6502_core(object):
         lib.M6502_core_new.restype = ctypes.c_void_p
 
         lib.M6502_core_brk.argtypes = [ctypes.c_void_p] #_brk
-        lib.m6502_core_brk.restype = ctypes.c_bool
+        lib.M6502_core_brk.restype = ctypes.c_bool
 
         lib.M6502_core_run.argtypes = [ctypes.c_void_p]
-        lib.m6502_core_run.restype = ctypes.c_void_p
+        lib.M6502_core_run.restype = ctypes.c_void_p
 
         lib.M6502_core_reset.argtypes = [ctypes.c_void_p]
-        lib.m6502_core_reset.restype = ctypes.c_void_p
+        lib.M6502_core_reset.restype = ctypes.c_void_p
 
         lib.M6502_core_irq.argtypes = [ctypes.c_void_p]
-        lib.m6502_core_irq.restype = ctypes.c_void_p
+        lib.M6502_core_irq.restype = ctypes.c_void_p
 
         lib.M6502_core_nmi.argtypes = [ctypes.c_void_p]
-        lib.m6502_core_nmi.restype = ctypes.c_void_p
+        lib.M6502_core_nmi.restype = ctypes.c_void_p
 
         self.obj = lib.M6502_core_new(mem)
     
@@ -37,11 +37,11 @@ class PY6502_core(object):
         lib.M6502_core_nmi(self.obj)
     
     def irq(self):
-        lib.m6502_core_irq(self.obj)
+        lib.M6502_core_irq(self.obj)
 
 class PY6502_memory(object):
     def __init__(self,rom):
-        lib.M6502_memory_new.argtypes = [ctypes.c_void_p]
+        lib.M6502_memory_new.argtypes = [ctypes.c_char_p]
         lib.M6502_memory_new.restype = ctypes.c_void_p
 
         lib.M6502_memory_read.argtypes = [ctypes.c_void_p,ctypes.c_uint16]
