@@ -66,7 +66,12 @@ int main( int c, char** argv)
 		    if (ev.type == SDL_QUIT) {
                 running = false;
 				exit(0);
-			}    
+			}
+            if(ev.type == SDL_KEYDOWN){
+                mem->write(0x00FF,SDL_GetKeyFromScancode( ev.key.keysym.scancode ));
+                std::ofstream outfile ("scancode_dump.txt");
+                outfile << ev.key.keysym.scancode << std::endl;
+            } //mwrtie 00ff
         }
         cpu.run();//run the 6502
         rng = rand() % 255;
