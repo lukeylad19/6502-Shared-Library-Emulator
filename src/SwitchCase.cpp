@@ -1406,7 +1406,7 @@ void M6502_core::execute(uint8_t val){
         case instruct::SBC_abs_y:{
             std::cout << "Valid Code: " << std::hex << std::uppercase << unsigned(val) << std::endl;
             uint8_t m = (read_abs(Y));
-            unsigned int t = A - m -(SR.C ? 1 : 0);                                                 //if carry is set add 1 to result
+            unsigned int t = A - m -(SR.C ? 0 : 1);                                                 //if carry is set add 1 to result
             SR.Z = !(t&0xFF);                                                                       //set the zero flag if the result will be zero
             SR.S = (t&0x80);                                                                        //set the sign flag to bit 7
             SR.V = (!((A^m)&0x80)&&((A^t)&0x80));                                                   //if the sign changes set overflow
